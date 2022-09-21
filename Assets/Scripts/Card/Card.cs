@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DungeonRoom : MonoBehaviour
+public class Card : DragAndDropElement
 {
     // Start is called before the first frame update
     void Start()
@@ -12,6 +12,11 @@ public class DungeonRoom : MonoBehaviour
 
     // Update is called once per frame
     void Update()
+    {
+        
+    }
+
+    private void OnMouseDown()
     {
         
     }
