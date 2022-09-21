@@ -27,19 +27,20 @@ public class GameManager : MonoBehaviour
 
         _hand = FindObjectOfType<Hand>();
         _board = FindObjectOfType<Board>();
-        _board.SetupBoard(levelData.boardData);
+        _board.SetupBoard(this, levelData.boardData);
 
         _gameState = new GameState();
     }
 
     public void OnCardSelected(Card card)
     {
-        //Enables the board for selection
+        //Enables the board for selection around the player
         //Must highlight the correct cells acording to the type of the card
     }
 
     public void OnCellSelected(int id)
     {
+        Debug.Log("Cell " + id + " was selected.");
         //Must play the selected card
         //If room card
         //--> Give card to selected cell
