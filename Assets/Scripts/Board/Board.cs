@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     public void SetupBoard(GameManager manager, BoardData boardData)
     {
         _gameManager = manager;
+
         boardCells = new List<BoardCell>();
         Sprite cellSprite = boardData.boardCellData.cellSprites.center;
 
@@ -36,7 +37,7 @@ public class Board : MonoBehaviour
 
     public void OnCellSelected(int id)
     {
-
+        _gameManager.OnCellSelected(id);
     }
 
     //Place a card on the board

@@ -23,7 +23,7 @@ public class DragAndDropElement : MonoBehaviour
             transform.position = Vector3.Lerp(transform.position, Input.mousePosition, 0.1f);
         }
     }
-
+    /*
     private void OnMouseDown()
     {
         isSelected = true;
@@ -36,6 +36,6 @@ public class DragAndDropElement : MonoBehaviour
         isSelected = false;
         transform.localScale = Vector3.one;
         onReleased.Invoke();
-    }
+    }*/
 }
 

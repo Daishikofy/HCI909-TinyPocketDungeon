@@ -5,7 +5,7 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     static private GameManager _instance;
-    public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get => _instance; private set => _instance = value; }
 
 
     public LevelData levelData;
@@ -20,10 +20,10 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
-        if (_instance == null)
-            _instance = this;
-        else
+        if (_instance != null && _instance != this)
             Destroy(this);
+
+        _instance = this;
 
         _hand = FindObjectOfType<Hand>();
         _board = FindObjectOfType<Board>();
@@ -32,8 +32,20 @@ public class GameManager : MonoBehaviour
         _gameState = new GameState();
     }
 
+    public void StartGame()
+    {
+        //Draw 3 cards
+        //Offer player to redraw
+    }
+
+    public void StartTurn()
+    {
+        //Draw card
+    }
+
     public void OnCardSelected(Card card)
     {
+        Debug.Log("GameInstance: On Card Selected");
         //Enables the board for selection around the player
         //Must highlight the correct cells acording to the type of the card
     }
