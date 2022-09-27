@@ -33,6 +33,11 @@ public class BoardCellView
             renderer.color = enabledColor;
     }
 
+    public void OnMouseDown()
+    {
+        controller.model.isSelected = true;
+    }
+
     public void OnEnabled(bool value)
     {
         if (value)
@@ -43,5 +48,11 @@ public class BoardCellView
         {
             renderer.color = defaultColor;
         }
+    }
+
+    public void OnPlaceCard() 
+    {
+       Debug.Log("Place card : " + controller.model.card.cardData.cardName);
+        controller.OnCardPlaced();
     }
 }

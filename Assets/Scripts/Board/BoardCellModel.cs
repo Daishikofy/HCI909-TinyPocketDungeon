@@ -7,12 +7,16 @@ public class BoardCellModel
     private int _id = -1;
     private Card _card = null;
     private bool _isEnabled = false;
+    private bool _isSelected = true;
 
-    public UnityEvent OnValueChanged;
+    public UnityEvent onCardChanged;
+    public UnityEvent<int> onSelected;
 
     public BoardCellModel(int id)
     {
         this.id = id;
+        onCardChanged = new UnityEvent();
+        onSelected = new UnityEvent<int>();
     }
 
     public int id { get => _id; private set => _id = value; }
@@ -21,7 +25,7 @@ public class BoardCellModel
         get => _card; 
         set {
             _card = value;
-            OnValueChanged.Invoke();
+            onCardChanged.Invoke();
         }
     }
 
@@ -34,6 +38,18 @@ public class BoardCellModel
             {
                 _isEnabled = value;
                 
+            }
+        }
+    }
+
+    public bool isSelected
+    {
+        get => _isSelected;
+        set {
+            if (value)
+            {
+                _isSelected = value;
+                onSelected.Invoke(_id);
             }
         }
     }

@@ -14,9 +14,11 @@ public class GameManager : MonoBehaviour
     private Hand _hand;
     [SerializeField]
     private Board _board;
+    [SerializeField]
+    private Player _player;
 
     private GameState _gameState;
-    public GameState GameState { get; private set; }
+    public GameState gameState { get => _gameState; private set => _gameState = value; }
 
     private void Awake()
     {
@@ -25,11 +27,16 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
 
+        gameState = new GameState();
+
         _hand = FindObjectOfType<Hand>();
         _board = FindObjectOfType<Board>();
-        _board.SetupBoard(this, levelData.boardData);
+        _player = FindObjectOfType<Player>();
 
-        _gameState = new GameState();
+        _board.SetupBoard(levelData.boardData);
+
+        _player.transform.parent = _board.transform;
+        _player.transform.position = _board.GetCellPosition(gameState.playerCellId);
     }
 
     public void StartGame()
@@ -41,15 +48,13 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
-        //Draw card
+        //Throw dice
     }
 
     public void OnCardSelected(Card card)
     {
-        Debug.Log("GameInstance: On Card Selected");
-        _gameState.selectedCard = card;
+        gameState.selectedCard = card;
         _board.EnableCellsAroundCell(_gameState.playerCellId);
-        //Enables the board for selection around the player
         //Must highlight the correct cells acording to the type of the card
     }
 
@@ -60,7 +65,8 @@ public class GameManager : MonoBehaviour
 
     public void OnCellSelected(int id)
     {
-        Debug.Log("Cell " + id + " was selected.");
+        _board.DisableCells();
+        _board.PlaceCard(gameState.playerCellId, id, gameState.selectedCard);
         //Must play the selected card
         //If room card
         //--> Give card to selected cell
@@ -71,9 +77,33 @@ public class GameManager : MonoBehaviour
         _hand.RemoveCard(_gameState.selectedCard.GetInstanceID());
     }
 
+    public void AddPlayerMovement(int cellId)
+    {
+        gameState.AddCellToPlayerMovement(cellId);
+    }
+
+    public void OnCardPlaced()
+    {
+        //Move player
+        //TODO: Add ennemies
+        int newCell = gameState.GetNextPlayerMovement();
+        while (newCell != -1)
+        {   
+            gameState.playerCellId = newCell;
+            _player.MovePlayer(_board.GetCellPosition(newCell));
+
+            newCell = gameState.GetNextPlayerMovement();
+        }
+
+        gameState.remainingActions--;
+    }
+
     public void OnTurnEnded()
     {
-        //Move board down a row
+        _board.MoveBoard();
+        //TODO : Check if player is in the lava
+        //TODO : Implement more functions to have the animation play nicely
+        StartTurn();
     }
 
 }
