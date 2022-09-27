@@ -20,6 +20,11 @@ public class BoardCell : MonoBehaviour
         EnableCell(false);
     }
 
+    public int GetID()
+    {
+        return _model.id;
+    }
+
     public void EnableCell(bool value)
     {
         model.isEnabled = value;

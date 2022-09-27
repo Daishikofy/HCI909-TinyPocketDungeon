@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384f44b1768836c45b302840fe761dc6, type: 3}
   m_Name: CardData
   m_EditorClassIdentifier: 
-  cardName: Default Name
-  cardVisual: {fileID: 21300000, guid: 1336bf3adfbbad1419eb0e334397b1a2, type: 3}
+  cardName: Name
+  cardVisual: {fileID: 21300000, guid: cc03c878eecfc664596056aa1bd0e7f1, type: 3}

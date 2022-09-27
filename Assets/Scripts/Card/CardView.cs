@@ -3,14 +3,15 @@ using TMPro;
 
 public class CardView
 {
-    Card controller;
+    private Card controller;
 
-    SpriteRenderer cardRenderer;
-    TextMeshPro cardText;
+    private SpriteRenderer cardRenderer;
+    private TextMeshPro cardText;
 
-    Color defaultColor;
-    Color highlightColor = Color.red;
+    private Color defaultColor;
+    private Color highlightColor = Color.red;
 
+    private bool isSelected = false;
     public CardView(Card controller, SpriteRenderer spriteRenderer, TextMeshPro textMesh)
     {
         this.controller = controller;
@@ -36,9 +37,35 @@ public class CardView
 
     public void OnMouseDown()
     {
+        if (!isSelected)
+        {
+            Select();
+        }
+        else
+        {
+            Deselect();
+        }
+    }
+    private void Select()
+    {
+        if (isSelected == true) return;
+
         Vector2 newPosition = controller.transform.position;
         newPosition.y += 1;
         controller.transform.position = newPosition;
-        controller.SelectCard();
+        isSelected = true;
+
+        controller.OnSelected(true);
+    }
+    public void Deselect()
+    {
+        if (isSelected == false) return;
+
+        Vector2 newPosition = controller.transform.position;
+        newPosition.y -= 1;
+        controller.transform.position = newPosition;
+        isSelected = false;
+
+        controller.OnSelected(false);
     }
 }

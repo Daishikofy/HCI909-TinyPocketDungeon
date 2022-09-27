@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
     {
         //Draw 3 cards
         //Offer player to redraw
+        //Place the player
     }
 
     public void StartTurn()
@@ -46,8 +47,15 @@ public class GameManager : MonoBehaviour
     public void OnCardSelected(Card card)
     {
         Debug.Log("GameInstance: On Card Selected");
+        _gameState.selectedCard = card;
+        _board.EnableCellsAroundCell(_gameState.playerCellId);
         //Enables the board for selection around the player
         //Must highlight the correct cells acording to the type of the card
+    }
+
+    public void OnCardDeselected()
+    {
+        _board.DisableCells();
     }
 
     public void OnCellSelected(int id)
@@ -60,6 +68,7 @@ public class GameManager : MonoBehaviour
         //--> Remaining cards that can be played in this turn -= 1
         //If item card
         //--> ItemCard.boost
+        _hand.RemoveCard(_gameState.selectedCard.GetInstanceID());
     }
 
     public void OnTurnEnded()

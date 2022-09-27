@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class GameState 
 {
+    public float boardMovingVelocity = 1;
+    public int playerCellId = 0;
+
     private Card _selectedCard = null;
     private int _ramainingActions = 1;
-    private float _boardMovingVelocity = 1;
     //We could use a ItemTimer which would tell how long the item takes effect and have an ItemEndedAction that we could just call when the Item Timer gets to 0
     //this action would be seted by the item upon use.
 
-    public Card selectedCard { get => _selectedCard; private set => _selectedCard = value;}
+    public Card selectedCard { get => _selectedCard; set => _selectedCard = value;}
 
     public int remainingActions 
     { 
