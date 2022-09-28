@@ -5,7 +5,7 @@ using UnityEngine.Events;
 public class BoardCellModel
 {
     private int _id = -1;
-    private Card _card = null;
+    private CardData _card = null;
     private bool _isEnabled = false;
     private bool _isSelected = true;
 
@@ -20,7 +20,7 @@ public class BoardCellModel
     }
 
     public int id { get => _id; private set => _id = value; }
-    public Card card 
+    public CardData card 
     { 
         get => _card; 
         set {

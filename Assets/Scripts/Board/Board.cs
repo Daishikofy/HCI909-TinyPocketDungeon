@@ -41,6 +41,8 @@ public class Board : MonoBehaviour
                 _boardCells.Add(cellId, newCell);
             }
         }
+
+        _boardCells[0].PlaceCard(GameManager.Instance.levelData.allCardsData.allCardsData[0]);
     }
 
     public Vector2 GetCellPosition(int cellId)
@@ -109,7 +111,7 @@ public class Board : MonoBehaviour
         //GameManager.Instance.AddPlayerMovement(otherCell);
 
         //PlaceCard will trigger the player movement. I should only be executed after all player movment have been registred.
-        _boardCells[newCellId].PlaceCard(card);
+        _boardCells[newCellId].PlaceCard(card.cardData);
     }
 
     public void OnCardPlaced()

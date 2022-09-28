@@ -213,7 +213,6 @@ MonoBehaviour:
   - {fileID: 751689238}
   - {fileID: 881234958}
   - {fileID: 1626084010}
-  spawnPointsOrder: 0000000001000000020000000300000004000000
 --- !u!4 &470883021
 Transform:
   m_ObjectHideFlags: 0

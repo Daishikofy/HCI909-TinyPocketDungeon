@@ -42,9 +42,9 @@ public class BoardCell : MonoBehaviour
         return model.card == null;
     }
 
-    public void PlaceCard(Card card)
+    public void PlaceCard(CardData cardData)
     {
-        model.card = card;
+        model.card = cardData;
     }
 
     public void OnCardPlaced()

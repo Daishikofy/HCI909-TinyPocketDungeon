@@ -52,7 +52,7 @@ public class BoardCellView
 
     public void OnPlaceCard() 
     {
-       Debug.Log("Place card : " + controller.model.card.cardData.cardName);
+        renderer.color = Color.black;
         controller.OnCardPlaced();
     }
 }
