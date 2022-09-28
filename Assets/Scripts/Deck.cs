@@ -20,16 +20,23 @@ public class Deck : MonoBehaviour
     public Card[] DrawCards(int numberOfCards)
     {
         Card[] cards = new Card[numberOfCards];
-        Card cardPrefab = GameManager.Instance.levelData.cardPrefab;
+        
 
         for (int i = 0; i < numberOfCards; i++)
         {
-            int cardId = deckData.deckCardsId[Random.Range(0, deckData.deckCardsId.Length)];
-
-            cards[i] = Instantiate(cardPrefab);
-            cards[i].Setup(GameManager.Instance.levelData.allCardsData.allCardsData[cardId]);
+            cards[i] = DrawCard();
         }
 
         return cards;
+    }
+
+    public Card DrawCard()
+    {
+        int cardId = deckData.deckCardsId[Random.Range(0, deckData.deckCardsId.Length)];
+
+        Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
+        card.Setup(GameManager.Instance.levelData.allCardsData.allCardsData[cardId]);
+
+        return card;
     }
 }
