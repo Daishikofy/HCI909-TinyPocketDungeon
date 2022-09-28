@@ -55,7 +55,9 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
-        //Throw dice
+        //TODO : Block hand
+        _hand.AddCard(_deck.DrawCard());
+        //TODO : Unblock hand
     }
 
     public void OnCardSelected(Card card)
@@ -82,6 +84,7 @@ public class GameManager : MonoBehaviour
         //If item card
         //--> ItemCard.boost
         _hand.RemoveCard(_gameState.selectedCard.cardId);
+        gameState.selectedCard = null;
     }
 
     public void AddPlayerMovement(int cellId)

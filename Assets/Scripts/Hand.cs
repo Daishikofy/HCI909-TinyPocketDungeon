@@ -7,16 +7,16 @@ public class Hand : MonoBehaviour
     public Card[] cards;
     [SerializeField]
     private Transform[] cardsSpawnPoints;
-    [SerializeField]
-    private int[] spawnPointsOrder;
 
     private int selectedCardId = -1;
+    private int nextEmptySlot = 0;
 
     public void SetupInitialHand(Card[] cards)
     {
         this.cards = cards;
-        for (int i = 0; i < cards.Length; i++)
-        {
+        int i = 0;
+        while (cards[i] != null)
+        { 
             Card currentCard = cards[i];
 
             currentCard.transform.parent = cardsSpawnPoints[i];
@@ -27,29 +27,50 @@ public class Hand : MonoBehaviour
 
             currentCard.onSelected.AddListener(OnCardSelected);
             currentCard.onDeselected.AddListener(OnCardDeselected);
+            i++;
         }
+        nextEmptySlot = i;
     }
 
-    public void DrawCards(int numberOfCards)
+    public void AddCard(Card card)
     {
-        
-    }
+        //TODO: Behaviour when hand is full!
+        if (nextEmptySlot >= cardsSpawnPoints.Length) return;
 
-    public void AddCard()
-    {
-        //Add card in the first empty slot
+        card.transform.parent = cardsSpawnPoints[nextEmptySlot];
+        card.transform.localPosition = Vector2.zero;
+        card.transform.localRotation = Quaternion.identity;
+
+        card.SetCardId(nextEmptySlot);
+
+        card.onSelected.AddListener(OnCardSelected);
+        card.onDeselected.AddListener(OnCardDeselected);
+
+        cards[nextEmptySlot] = card;
+
+        nextEmptySlot += 1;
     }
 
     public void RemoveCard(int id)
     {
+        Debug.Log(" - - START REMOTION - -");
         int emptyIndex = -1;
         for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i] != null && cards[i].cardId == id)
             {
                 emptyIndex = i;
-                cards[i].gameObject.SetActive(false);
+                Debug.Log("Destroy" + cards[i].cardData.name);
+                Destroy(cards[i].gameObject);
+                nextEmptySlot -= 1 ;
+                Debug.Log("Next empty slot : " + nextEmptySlot);
+                break;
             }
+        }
+
+        if (selectedCardId == id)
+        {
+            selectedCardId = -1;
         }
 
         //Remove card with corresponding id from cards
@@ -62,20 +83,24 @@ public class Hand : MonoBehaviour
             Debug.Log("No card was removed");
             return;
         }
+
         for (int i = emptyIndex + 1; i < cards.Length; i++)
         {
-            int previousIndex = spawnPointsOrder[i - 1];
-            int currentIndex = spawnPointsOrder[i];
-            Debug.Log("Move " + cards[currentIndex].cardData.cardName + " from " + currentIndex + " to " + previousIndex);
-            cards[previousIndex] = cards[currentIndex];
+            if (cards[i] == null)
+            {
+                return;
+            }
+           
+            Debug.Log("Move " + cards[i].cardData.cardName + " from " + i + " to " + (i - 1));
+            cards[(i - 1)] = cards[i];
+            cards[i] = null;
+            cards[(i - 1)].transform.parent = cardsSpawnPoints[(i - 1)];
+            cards[(i - 1)].transform.localPosition = Vector2.zero;
+            cards[(i - 1)].transform.localRotation = Quaternion.identity;
 
-            Debug.Log( cards[currentIndex].cardData.cardName + " is now in " + cardsSpawnPoints[previousIndex].name);
-            cards[previousIndex].transform.parent = cardsSpawnPoints[previousIndex];
-            cards[previousIndex].transform.localPosition = Vector2.zero;
-            cards[previousIndex].transform.localRotation = Quaternion.identity;
-
-            cards[previousIndex].SetCardId(previousIndex);
+            cards[(i - 1)].SetCardId((i - 1));
         }
+        Debug.Log(" - - END REMOTION - -");
     }
 
     public void OnCardSelected(int cardId)

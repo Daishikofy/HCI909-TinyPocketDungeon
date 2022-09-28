@@ -19,7 +19,7 @@ public class Deck : MonoBehaviour
 
     public Card[] DrawCards(int numberOfCards)
     {
-        Card[] cards = new Card[numberOfCards];
+        Card[] cards = new Card[5];
         
 
         for (int i = 0; i < numberOfCards; i++)
