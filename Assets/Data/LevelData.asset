@@ -13,3 +13,5 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   boardData: {fileID: 11400000, guid: e22dea6a734501f40bb2faf45a34db86, type: 2}
+  allCardsData: {fileID: 11400000, guid: c8bf194a35ad11f48865ba40feff5528, type: 2}
+  cardPrefab: {fileID: 5285968705351622497, guid: d9c475cc63a165d4bb722abedf306f86, type: 3}

@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
     private Board _board;
     [SerializeField]
     private Player _player;
+    [SerializeField]
+    private Deck _deck;
 
     private GameState _gameState;
     public GameState gameState { get => _gameState; private set => _gameState = value; }
@@ -32,15 +34,20 @@ public class GameManager : MonoBehaviour
         _hand = FindObjectOfType<Hand>();
         _board = FindObjectOfType<Board>();
         _player = FindObjectOfType<Player>();
+        _deck = new GameObject("Deck", typeof(Deck)).GetComponent<Deck>();
 
         _board.SetupBoard(levelData.boardData);
 
         _player.transform.parent = _board.transform;
         _player.transform.position = _board.GetCellPosition(gameState.playerCellId);
+
+        StartGame();
     }
 
     public void StartGame()
     {
+        Card[] cards = _deck.DrawCards(3);
+        _hand.SetupInitialHand(cards);
         //Draw 3 cards
         //Offer player to redraw
         //Place the player
@@ -74,7 +81,7 @@ public class GameManager : MonoBehaviour
         //--> Remaining cards that can be played in this turn -= 1
         //If item card
         //--> ItemCard.boost
-        _hand.RemoveCard(_gameState.selectedCard.GetInstanceID());
+        _hand.RemoveCard(_gameState.selectedCard.cardId);
     }
 
     public void AddPlayerMovement(int cellId)

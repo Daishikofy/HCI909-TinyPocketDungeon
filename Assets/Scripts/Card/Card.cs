@@ -16,18 +16,19 @@ public class Card : DragAndDropElement
 
     private CardView view;
 
-    private void Awake()
+    public void Setup(CardData cardData)
     {
+        this.cardData = cardData;
+
         view = new CardView(this, spriteRenderer, textMesh);
         onSelected = new UnityEvent<int>();
     }
 
-    public void SetupCard(int id)
+    public void SetCardId(int id)
     {
         cardId = id;
     }
        
-
     public void OnSelected(bool value)
     {
         if (value)

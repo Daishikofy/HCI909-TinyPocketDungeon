@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class DragAndDropElement : MonoBehaviour
 {
     private bool isSelected = false;
-    private Collider2D _collider;
+    protected Collider2D _collider;
 
     private UnityEvent onHolding;
     private UnityEvent onReleased;

@@ -6,4 +6,6 @@ using UnityEngine;
 public class LevelData : ScriptableObject
 {
     public BoardData boardData;
+    public AllCardsData allCardsData;
+    public Card cardPrefab;
 }
