@@ -77,7 +77,6 @@ public class Board : MonoBehaviour
 
     public void AttackCell(int cellId, int damages)
     {
-        Debug.Log("ATTACKED: " + damages);
         _boardCells[cellId].AttackCell(damages);
     }
 

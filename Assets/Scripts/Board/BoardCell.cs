@@ -97,7 +97,6 @@ public class BoardCell : MonoBehaviour
 
     private void OnEnnemyDefeated()
     {
-        Debug.Log("Ennemy defeated");
         model.cellState = ECellStates.Connected;
     }
 

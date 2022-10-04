@@ -58,6 +58,12 @@ public class GameManager : MonoBehaviour
         //TODO : Block hand
         _hand.AddCard(_deck.DrawCard());
         gameState.remainingActions = 1;
+
+        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+            ExecuteTurnAction();
+        //If current cell is blocked
+        //// ExecuteTurnAction
+        //Else, hand is enabled, you can place a card to move
         //TODO : Unblock hand
     }
 
@@ -95,38 +101,48 @@ public class GameManager : MonoBehaviour
 
     public void OnRoomPlaced()
     {
+        /*
         while (gameState.remainingActions > 0 )
         {      
             ExecuteTurnAction();
             gameState.remainingActions -= 1;
             Debug.Log("remaining actions: " + gameState.remainingActions);
         }
-        OnTurnEnded();
+        OnTurnEnded();*/
+        ExecuteTurnAction();
     }
 
     public void ExecuteTurnAction()
     {
-        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+        while (gameState.remainingActions > 0)
         {
-            _board.AttackCell(gameState.currentCellId, _player.attackPower);
-        }
-        else
-        {
-            //TODO: Enabling playing cards should be here
-            //If Card == Mouvement ->
-            int newCell = gameState.GetNextPlayerMovement();
-            if (newCell != -1)
+            if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
             {
-                _board.SetCellVisisted(gameState.currentCellId);
-
-                gameState.currentCellId = newCell;               
-                _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
-                if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+                _board.AttackCell(gameState.currentCellId, _player.attackPower);
+            }
+            else
+            {
+                //If Card == Mouvement ->
+                int newCell = gameState.GetNextPlayerMovement();
+                while (newCell != -1 && (_board.GetCellState(gameState.currentCellId) != ECellStates.Blocked))
                 {
-                    _board.AttackCell(gameState.currentCellId, _player.attackPower);
+                    _board.SetCellVisisted(gameState.currentCellId);
+
+                    gameState.currentCellId = newCell;
+                    _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
+
+                    if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+                    {
+                        _board.AttackCell(gameState.currentCellId, _player.attackPower);
+                    }
+
+                    newCell = gameState.GetNextPlayerMovement();
                 }
             }
+
+            gameState.remainingActions -= 1;
         }
+        OnTurnEnded();
         //Debug.Log("END Execute turn action");
     }
     
@@ -137,7 +153,6 @@ public class GameManager : MonoBehaviour
 
     public void OnTurnEnded()
     {
-        Debug.Log("END TURN");
         _board.MoveBoard();
         //TODO : Check if player is in the lava
         //TODO : Implement more functions to have the animation play nicely
