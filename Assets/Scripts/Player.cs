@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
     public void MovePlayer(Vector2 newPosition)
     {
         //TODO: Lerp between old and new position
+        newPosition.y -= 0.25f;
         transform.position = newPosition;
         GameManager.Instance.OnPlayerMoved();
     }

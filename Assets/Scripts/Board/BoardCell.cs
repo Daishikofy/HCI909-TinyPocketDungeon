@@ -18,7 +18,7 @@ public class BoardCell : MonoBehaviour
     public BoardCellModel model { get => _model; private set => _model = value; }
     public BoardCellView view { get => _view; private set => _view = value; }
 
-    public void SetupBoardCell(Board board, int id, Vector2 position, EnnemyData ennemyData)
+    public void SetupBoardCell(Board board, int id, Vector2 position, EnnemyData ennemyData, Ennemy ennemyPrefab)
     {
         gameObject.name = "Cell_" + id;
 
@@ -37,8 +37,7 @@ public class BoardCell : MonoBehaviour
         if (ennemyData != null)
         {
             //Instanciate new ennemy
-            model.ennemy = new GameObject("Ennemy", typeof(Ennemy)).GetComponent<Ennemy>();
-            model.ennemy.transform.parent = _ennemySpawnPoint;
+            model.ennemy = Instantiate(ennemyPrefab, _ennemySpawnPoint);
             model.ennemy.SetupEnnemy(ennemyData, OnEnnemyDefeated);
             //TODO: Maybe connect to controller directly?
             SetCellRoom();

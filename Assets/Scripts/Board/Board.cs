@@ -9,7 +9,7 @@ public class Board : MonoBehaviour
 
     private BoardData _boardData;
 
-    public void SetupBoard(BoardData boardData, EnnemyData[] ennemies)
+    public void SetupBoard(BoardData boardData, EnnemyData[] ennemies, Ennemy ennemyPrefab)
     {
         _boardData = boardData;
 
@@ -50,7 +50,7 @@ public class Board : MonoBehaviour
 
                 //Instantiate cell
                 BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
-                newCell.SetupBoardCell(this, cellId, currentPosition, ennemyData);
+                newCell.SetupBoardCell(this, cellId, currentPosition, ennemyData, ennemyPrefab);
 
                 _boardCells.Add(cellId, newCell);
             }

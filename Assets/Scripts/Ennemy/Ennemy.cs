@@ -5,12 +5,15 @@ public class Ennemy : MonoBehaviour
 {
     private EnnemyModel _model;
     private EnnemyView _view;
+
+    [SerializeField]
+    private SpriteRenderer _pawnThumbnail;
     public void SetupEnnemy(EnnemyData data, UnityAction onDefeatedCallback)
     {
         _model = new EnnemyModel(data);
         _model.onDefeated.AddListener(onDefeatedCallback);
         _model.onDefeated.AddListener(OnDefeated);
-        _view = new EnnemyView(this, _model);
+        _view = new EnnemyView(this, _model, _pawnThumbnail);
     }
 
     private void OnDefeated()

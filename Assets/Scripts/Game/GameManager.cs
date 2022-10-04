@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _deck = new GameObject("Deck", typeof(Deck)).GetComponent<Deck>();
 
-        _board.SetupBoard(levelData.boardData, levelData.ennemies);
+        _board.SetupBoard(levelData.boardData, levelData.ennemies, levelData.ennemyPrefab);
 
         _player.transform.parent = _board.transform;
         _player.transform.position = _board.GetCellPosition(gameState.currentCellId);
