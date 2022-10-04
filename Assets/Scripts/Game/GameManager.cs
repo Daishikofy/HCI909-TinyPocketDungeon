@@ -82,6 +82,8 @@ public class GameManager : MonoBehaviour
     public void OnCellSelected(int id)
     {
         _board.DisableCells();
+
+        _hand.RemoveCard(_gameState.selectedCard.cardId);
         _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
         //Must play the selected card
         //If room card
@@ -90,7 +92,7 @@ public class GameManager : MonoBehaviour
         //--> Remaining cards that can be played in this turn -= 1
         //If item card
         //--> ItemCard.boost
-        _hand.RemoveCard(_gameState.selectedCard.cardId);
+        
         gameState.selectedCard = null;
     }
 

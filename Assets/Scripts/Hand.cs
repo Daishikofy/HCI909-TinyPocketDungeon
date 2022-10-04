@@ -35,7 +35,11 @@ public class Hand : MonoBehaviour
     public void AddCard(Card card)
     {
         //TODO: Behaviour when hand is full!
-        if (nextEmptySlot >= cardsSpawnPoints.Length) return;
+        if (nextEmptySlot >= cardsSpawnPoints.Length)
+        {
+            Destroy(card.gameObject);
+            return;
+        }
 
         card.transform.parent = cardsSpawnPoints[nextEmptySlot];
         card.transform.localPosition = Vector2.zero;
