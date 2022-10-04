@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameState 
 {
-    public float boardMovingVelocity = 1;
-    public int playerCellId = 0;
+    public float boardMovingVelocity = 0.5f;
+    public int currentCellId = 0;
 
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
@@ -27,7 +27,7 @@ public class GameState
             _ramainingActions = value; 
             if (remainingActions <= 0)
             {
-                GameManager.Instance.OnTurnEnded();
+                //GameManager.Instance.OnTurnEnded();
             }
         } 
     }

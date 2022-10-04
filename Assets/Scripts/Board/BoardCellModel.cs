@@ -2,30 +2,45 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.Events;
 
+
+
 public class BoardCellModel
 {
     private int _id = -1;
-    private CardData _card = null;
+    private ECellStates _cellState = ECellStates.Empty;
     private bool _isEnabled = false;
     private bool _isSelected = true;
+    private Ennemy _ennemy;
 
-    public UnityEvent onCardChanged;
+    public UnityEvent onStateChanged;
     public UnityEvent<int> onSelected;
 
     public BoardCellModel(int id)
     {
         this.id = id;
-        onCardChanged = new UnityEvent();
+        onStateChanged = new UnityEvent();
         onSelected = new UnityEvent<int>();
     }
 
     public int id { get => _id; private set => _id = value; }
-    public CardData card 
+    public Ennemy ennemy 
     { 
-        get => _card; 
+        get => _ennemy;
+        set
+        {
+            _ennemy = value;
+            if(_ennemy != null)
+            {
+                cellState = ECellStates.Blocked;
+            }
+        }
+    }
+    public ECellStates cellState 
+    { 
+        get => _cellState; 
         set {
-            _card = value;
-            onCardChanged.Invoke();
+            _cellState = value;
+            onStateChanged.Invoke();
         }
     }
 

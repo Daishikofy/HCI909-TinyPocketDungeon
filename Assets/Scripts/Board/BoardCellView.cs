@@ -7,7 +7,7 @@ public class BoardCellView
     private BoardCell controller;
     private SpriteRenderer renderer;
 
-    private Color defaultColor = Color.cyan;
+    private Color defaultColor = new Color(0.7f, 0.7f, 0.0f);
     private Color hilightColor = Color.red;
     private Color enabledColor = Color.white;
     public BoardCellView(BoardCell controller, Vector2 position)
@@ -50,9 +50,15 @@ public class BoardCellView
         }
     }
 
-    public void OnPlaceCard() 
+    public void OnPlaceRoom() 
+    {
+        //TODO : Animations
+        renderer.color = Color.black;
+        controller.OnRoomPlaced();
+    }
+
+    public void SetCellRoom()
     {
         renderer.color = Color.black;
-        controller.OnCardPlaced();
     }
 }

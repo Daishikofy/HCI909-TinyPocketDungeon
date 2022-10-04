@@ -12,10 +12,13 @@ public class BoardCell : MonoBehaviour
 
     private Collider2D _collider;
 
+    [SerializeField]
+    private Transform _ennemySpawnPoint;
+
     public BoardCellModel model { get => _model; private set => _model = value; }
     public BoardCellView view { get => _view; private set => _view = value; }
 
-    public void SetupBoardCell(Board board, int id, Vector2 position)
+    public void SetupBoardCell(Board board, int id, Vector2 position, EnnemyData ennemyData)
     {
         gameObject.name = "Cell_" + id;
 
@@ -25,11 +28,26 @@ public class BoardCell : MonoBehaviour
         model.onSelected.AddListener(board.OnCellSelected);
 
         view = new BoardCellView(this, position);
-        model.onCardChanged.AddListener(view.OnPlaceCard);
+       //model.onStateChanged.AddListener(view.OnPlaceRoom);
 
         _collider = GetComponent<Collider2D>();
 
         EnableCell(false);
+
+        if (ennemyData != null)
+        {
+            //Instanciate new ennemy
+            model.ennemy = new GameObject("Ennemy", typeof(Ennemy)).GetComponent<Ennemy>();
+            model.ennemy.transform.parent = _ennemySpawnPoint;
+            model.ennemy.SetupEnnemy(ennemyData, OnEnnemyDefeated);
+            //TODO: Maybe connect to controller directly?
+            SetCellRoom();
+        }
+    }
+
+    public void SetCellRoom()
+    {
+        view.SetCellRoom();
     }
 
     public int GetID()
@@ -39,17 +57,25 @@ public class BoardCell : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return model.card == null;
+        return model.cellState == ECellStates.Empty;
     }
 
-    public void PlaceCard(CardData cardData)
+
+    public void PlaceRoom(CardData cardData)
     {
-        model.card = cardData;
+        //TODO: The use of cardData is a bit irrelevant for now. Look at the 01/10/2022 note about why it is like this before removing it. 
+        model.cellState = ECellStates.Room;
+        view.OnPlaceRoom();
     }
 
-    public void OnCardPlaced()
+    public void OnRoomPlaced()
     {
-        _board.OnCardPlaced();
+        _board.OnRoomPlaced();
+    }
+
+    public void SetVisited()
+    {
+        model.cellState = ECellStates.Connected;
     }
 
     public void EnableCell(bool value)
@@ -57,6 +83,22 @@ public class BoardCell : MonoBehaviour
         _collider.enabled = value;
         model.isEnabled = value;
         view.OnEnabled(value);
+    }
+
+    public void AttackCell(int damages)
+    {
+        model.ennemy.OnAttacked(damages);
+    }
+
+    public ECellStates GetState()
+    {
+        return model.cellState;
+    }
+
+    private void OnEnnemyDefeated()
+    {
+        Debug.Log("Ennemy defeated");
+        model.cellState = ECellStates.Connected;
     }
 
 

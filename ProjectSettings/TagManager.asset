@@ -41,3 +41,12 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Background
+    uniqueID: 3092989089
+    locked: 0
+  - name: Pawns
+    uniqueID: 395177805
+    locked: 0
+  - name: UI
+    uniqueID: 3084015151
+    locked: 0

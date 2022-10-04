@@ -9,7 +9,7 @@ public class Board : MonoBehaviour
 
     private BoardData _boardData;
 
-    public void SetupBoard(BoardData boardData)
+    public void SetupBoard(BoardData boardData, EnnemyData[] ennemies)
     {
         _boardData = boardData;
 
@@ -24,6 +24,9 @@ public class Board : MonoBehaviour
         Vector2 currentPosition = new Vector2(transform.position.x - (cellSprite.bounds.size.x * (boardData.width - 1)) / 2.0f, 0);
         cellContainer.transform.position = currentPosition;
 
+        int currentEnnemyIndex = 0;
+        float boardSize = boardData.height * boardData.width;
+
         for (int height = 0; height < boardData.height; height++)
         {
             for (int width = 0; width < boardData.width; width++)
@@ -32,17 +35,29 @@ public class Board : MonoBehaviour
                 currentPosition.y = height * cellSprite.bounds.size.y;
 
                 int cellId = width + boardData.width * height;
-                Vector2 position = CellIdToPosition(cellId);
-                //print("Id: " + cellId + " - Position : (" + position.x + ", " + position.y + ")");
 
+                //Spawn ennemies randomly
+                EnnemyData ennemyData = null;
+                if (height >= 2)
+                {
+                    float currentProbability = (float)(ennemies.Length - currentEnnemyIndex) / (boardSize - cellId);
+                    if ((currentEnnemyIndex < ennemies.Length) && (Random.value <= currentProbability))
+                    {
+                        ennemyData = ennemies[currentEnnemyIndex];
+                        currentEnnemyIndex++;
+                    }
+                }
+
+                //Instantiate cell
                 BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
-                newCell.SetupBoardCell(this, cellId, currentPosition);
+                newCell.SetupBoardCell(this, cellId, currentPosition, ennemyData);
 
                 _boardCells.Add(cellId, newCell);
             }
         }
 
-        _boardCells[0].PlaceCard(GameManager.Instance.levelData.allCardsData.allCardsData[0]);
+        //TODO: This is very much POG
+        _boardCells[0].SetCellRoom();
     }
 
     public Vector2 GetCellPosition(int cellId)
@@ -50,22 +65,41 @@ public class Board : MonoBehaviour
         return _boardCells[cellId].transform.position;
     }
 
-    public void OnCellSelected(int id)
+    public ECellStates GetCellState(int cellId)
     {
-        GameManager.Instance.OnCellSelected(id);
+        return _boardCells[cellId].GetState();
+    }
+
+    public void OnCellSelected(int cellId)
+    {
+        GameManager.Instance.OnCellSelected(cellId);
+    }
+
+    public void AttackCell(int cellId, int damages)
+    {
+        Debug.Log("ATTACKED: " + damages);
+        _boardCells[cellId].AttackCell(damages);
     }
 
     public void EnableCellsAroundCell(int cellId)
     {
         _enabledCells.Clear();
 
-        EnableNeighbourCell(cellId, cellId - 1, false);
-        EnableNeighbourCell(cellId, cellId + 1, false);
-        EnableNeighbourCell(cellId, cellId + _boardData.width, true);
+        int[] neigboursId = {GetValidNeighbourCell(cellId, cellId + _boardData.width, true),
+                             GetValidNeighbourCell(cellId, cellId - 1, false),
+                             GetValidNeighbourCell(cellId, cellId + 1, false)};
 
+        for (int i = 0; i < 3; i++)
+        {
+            if (neigboursId[i] >= 0 && _boardCells[neigboursId[i]].IsEmpty())
+            {
+                _boardCells[neigboursId[i]].EnableCell(true);
+                _enabledCells.Add(neigboursId[i]);
+            }
+        }
     }
 
-    private void EnableNeighbourCell(int currentCell, int neighbourCell, bool isVertical)
+    private int GetValidNeighbourCell(int currentCell, int neighbourCell, bool isVertical)
     {
         Vector2 cellPosition = CellIdToPosition(currentCell);
         if (_boardCells.ContainsKey(neighbourCell))
@@ -78,14 +112,9 @@ public class Board : MonoBehaviour
                 isValid = neighbourPosition.y == cellPosition.y;
 
             if (isValid)
-            {
-                if (_boardCells[neighbourCell].IsEmpty())
-                {
-                    _boardCells[neighbourCell].EnableCell(true);
-                    _enabledCells.Add(neighbourCell);
-                }
-            }
+                return neighbourCell;           
         }
+        return -1;
     }
 
     public void DisableCells()
@@ -98,25 +127,35 @@ public class Board : MonoBehaviour
     }
 
     //Place a card on the board
-    public void PlaceCard(int currentCellId, int newCellId, Card card)
+    public void PlaceRoom(int currentCellId, int newCellId, Card card)
     {
         GameManager.Instance.AddPlayerMovement(newCellId);
 
-        //if newCellId - currentCellId = 1 : ->
-        //if newCellId - currentCellId = -1 : <-
-        //if newCellId - currentCellId > 1 : î
+        int[] neigboursId = {GetValidNeighbourCell(newCellId, newCellId + _boardData.width, true),
+                             GetValidNeighbourCell(newCellId, newCellId - 1, false),
+                             GetValidNeighbourCell(newCellId, newCellId + 1, false)};
 
-        //Check for other cells around
-        //If a cell is not connected, connects it
-        //GameManager.Instance.AddPlayerMovement(otherCell);
+        for (int i = 0; i < 3; i++)
+        {
+            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId && (GetCellState(neigboursId[i]) == ECellStates.Room || GetCellState(neigboursId[i]) == ECellStates.Blocked))
+            {
+                GameManager.Instance.AddPlayerMovement(neigboursId[i]);
+                break;
+            }
+        }
 
-        //PlaceCard will trigger the player movement. I should only be executed after all player movment have been registred.
-        _boardCells[newCellId].PlaceCard(card.cardData);
+        //PlaceCard will trigger the player movement. It should only be executed after all player movment have been registred.
+        _boardCells[newCellId].PlaceRoom(card.cardData);
     }
 
-    public void OnCardPlaced()
+    public void OnRoomPlaced()
     {
-        GameManager.Instance.OnCardPlaced();
+        GameManager.Instance.OnRoomPlaced();
+    }
+
+    public void SetCellVisisted(int cellId)
+    {
+        _boardCells[cellId].SetVisited();
     }
 
     //Move the board down

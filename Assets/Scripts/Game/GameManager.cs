@@ -36,10 +36,10 @@ public class GameManager : MonoBehaviour
         _player = FindObjectOfType<Player>();
         _deck = new GameObject("Deck", typeof(Deck)).GetComponent<Deck>();
 
-        _board.SetupBoard(levelData.boardData);
+        _board.SetupBoard(levelData.boardData, levelData.ennemies);
 
         _player.transform.parent = _board.transform;
-        _player.transform.position = _board.GetCellPosition(gameState.playerCellId);
+        _player.transform.position = _board.GetCellPosition(gameState.currentCellId);
 
         StartGame();
     }
@@ -57,13 +57,14 @@ public class GameManager : MonoBehaviour
     {
         //TODO : Block hand
         _hand.AddCard(_deck.DrawCard());
+        gameState.remainingActions = 1;
         //TODO : Unblock hand
     }
 
     public void OnCardSelected(Card card)
     {
         gameState.selectedCard = card;
-        _board.EnableCellsAroundCell(_gameState.playerCellId);
+        _board.EnableCellsAroundCell(_gameState.currentCellId);
         //Must highlight the correct cells acording to the type of the card
     }
 
@@ -75,7 +76,7 @@ public class GameManager : MonoBehaviour
     public void OnCellSelected(int id)
     {
         _board.DisableCells();
-        _board.PlaceCard(gameState.playerCellId, id, gameState.selectedCard);
+        _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
         //Must play the selected card
         //If room card
         //--> Give card to selected cell
@@ -92,24 +93,51 @@ public class GameManager : MonoBehaviour
         gameState.AddCellToPlayerMovement(cellId);
     }
 
-    public void OnCardPlaced()
+    public void OnRoomPlaced()
     {
-        //Move player
-        //TODO: Add ennemies
-        int newCell = gameState.GetNextPlayerMovement();
-        while (newCell != -1)
-        {   
-            gameState.playerCellId = newCell;
-            _player.MovePlayer(_board.GetCellPosition(newCell));
-
-            newCell = gameState.GetNextPlayerMovement();
+        while (gameState.remainingActions > 0 )
+        {      
+            ExecuteTurnAction();
+            gameState.remainingActions -= 1;
+            Debug.Log("remaining actions: " + gameState.remainingActions);
         }
+        OnTurnEnded();
+    }
 
-        gameState.remainingActions--;
+    public void ExecuteTurnAction()
+    {
+        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+        {
+            _board.AttackCell(gameState.currentCellId, _player.attackPower);
+        }
+        else
+        {
+            //TODO: Enabling playing cards should be here
+            //If Card == Mouvement ->
+            int newCell = gameState.GetNextPlayerMovement();
+            if (newCell != -1)
+            {
+                _board.SetCellVisisted(gameState.currentCellId);
+
+                gameState.currentCellId = newCell;               
+                _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
+                if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+                {
+                    _board.AttackCell(gameState.currentCellId, _player.attackPower);
+                }
+            }
+        }
+        //Debug.Log("END Execute turn action");
+    }
+    
+    public void OnPlayerMoved()
+    {
+        //ExecuteTurnAction();
     }
 
     public void OnTurnEnded()
     {
+        Debug.Log("END TURN");
         _board.MoveBoard();
         //TODO : Check if player is in the lava
         //TODO : Implement more functions to have the animation play nicely

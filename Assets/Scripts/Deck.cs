@@ -35,7 +35,7 @@ public class Deck : MonoBehaviour
         int cardId = deckData.deckCardsId[Random.Range(0, deckData.deckCardsId.Length)];
 
         Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
-        card.Setup(GameManager.Instance.levelData.allCardsData.allCardsData[cardId]);
+        card.Setup(GameManager.Instance.levelData.cardsData.allCardsData[cardId]);
 
         return card;
     }

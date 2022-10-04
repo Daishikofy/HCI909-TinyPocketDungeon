@@ -53,17 +53,17 @@ public class Hand : MonoBehaviour
 
     public void RemoveCard(int id)
     {
-        Debug.Log(" - - START REMOTION - -");
+        //Debug.Log(" - - START REMOTION - -");
         int emptyIndex = -1;
         for (int i = 0; i < cards.Length; i++)
         {
             if (cards[i] != null && cards[i].cardId == id)
             {
                 emptyIndex = i;
-                Debug.Log("Destroy" + cards[i].cardData.name);
+                //Debug.Log("Destroy" + cards[i].cardData.name);
                 Destroy(cards[i].gameObject);
                 nextEmptySlot -= 1 ;
-                Debug.Log("Next empty slot : " + nextEmptySlot);
+                //Debug.Log("Next empty slot : " + nextEmptySlot);
                 break;
             }
         }
@@ -91,7 +91,7 @@ public class Hand : MonoBehaviour
                 return;
             }
            
-            Debug.Log("Move " + cards[i].cardData.cardName + " from " + i + " to " + (i - 1));
+            //Debug.Log("Move " + cards[i].cardData.cardName + " from " + i + " to " + (i - 1));
             cards[(i - 1)] = cards[i];
             cards[i] = null;
             cards[(i - 1)].transform.parent = cardsSpawnPoints[(i - 1)];
@@ -100,7 +100,7 @@ public class Hand : MonoBehaviour
 
             cards[(i - 1)].SetCardId((i - 1));
         }
-        Debug.Log(" - - END REMOTION - -");
+        //Debug.Log(" - - END REMOTION - -");
     }
 
     public void OnCardSelected(int cardId)
