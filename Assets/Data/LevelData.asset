@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LevelData
   m_EditorClassIdentifier: 
   boardData: {fileID: 11400000, guid: e22dea6a734501f40bb2faf45a34db86, type: 2}
+  ennemyPrefab: {fileID: 6120581732429154075, guid: 2537c493e20ebfb4cbfe9d8d4cb4f205, type: 3}
   ennemies:
   - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
   - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
