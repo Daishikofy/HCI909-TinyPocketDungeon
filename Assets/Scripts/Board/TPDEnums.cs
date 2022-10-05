@@ -4,6 +4,6 @@
     Room,
     Connected,
     Blocked,
-    Unvisited = Room | Blocked
+    FinalLine
 };
 

@@ -5,6 +5,8 @@ public class LevelData : ScriptableObject
 {
     public BoardData boardData;
 
+    public float gameOverHeight = -3.44f;
+
     public Ennemy ennemyPrefab;
     public EnnemyData[] ennemies;
 

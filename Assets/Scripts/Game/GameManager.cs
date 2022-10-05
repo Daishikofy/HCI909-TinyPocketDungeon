@@ -48,9 +48,7 @@ public class GameManager : MonoBehaviour
     {
         Card[] cards = _deck.DrawCards(3);
         _hand.SetupInitialHand(cards);
-        //Draw 3 cards
-        //Offer player to redraw
-        //Place the player
+        //TODO: Offer player to redraw
     }
 
     public void StartTurn()
@@ -70,6 +68,9 @@ public class GameManager : MonoBehaviour
     public void OnCardSelected(Card card)
     {
         gameState.selectedCard = card;
+        //IF MAGIC CARD
+        ////ENABLE PLAYER
+        //IF ROOM CARD
         _board.EnableCellsAroundCell(_gameState.currentCellId);
         //Must highlight the correct cells acording to the type of the card
     }
@@ -133,6 +134,12 @@ public class GameManager : MonoBehaviour
                     gameState.currentCellId = newCell;
                     _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
 
+                    if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
+                    {
+                        Debug.Log("YOU WIN THE GAME");
+                        break;
+                    }
+
                     if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
                     {
                         _board.AttackCell(gameState.currentCellId, _player.attackPower);
@@ -156,9 +163,19 @@ public class GameManager : MonoBehaviour
     public void OnTurnEnded()
     {
         _board.MoveBoard();
-        //TODO : Check if player is in the lava
-        //TODO : Implement more functions to have the animation play nicely
-        StartTurn();
+        if(_player.transform.position.y <= levelData.gameOverHeight)
+        {
+            GameOver();
+        }
+        else
+        {
+            StartTurn();
+        }
+    }
+
+    private void GameOver()
+    {
+        Debug.Log("GAME OVER");
     }
 
 }

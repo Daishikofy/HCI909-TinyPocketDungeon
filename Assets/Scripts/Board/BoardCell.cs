@@ -18,17 +18,16 @@ public class BoardCell : MonoBehaviour
     public BoardCellModel model { get => _model; private set => _model = value; }
     public BoardCellView view { get => _view; private set => _view = value; }
 
-    public void SetupBoardCell(Board board, int id, Vector2 position, EnnemyData ennemyData, Ennemy ennemyPrefab)
+    public void SetupBoardCell(Board board, int id, Vector2 position, bool isFinishLine, EnnemyData ennemyData, Ennemy ennemyPrefab)
     {
         gameObject.name = "Cell_" + id;
 
         _board = board;
 
-        model = new BoardCellModel(id);
+        model = new BoardCellModel(id, isFinishLine);
         model.onSelected.AddListener(board.OnCellSelected);
 
         view = new BoardCellView(this, position);
-       //model.onStateChanged.AddListener(view.OnPlaceRoom);
 
         _collider = GetComponent<Collider2D>();
 

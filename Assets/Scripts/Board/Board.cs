@@ -50,10 +50,23 @@ public class Board : MonoBehaviour
 
                 //Instantiate cell
                 BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
-                newCell.SetupBoardCell(this, cellId, currentPosition, ennemyData, ennemyPrefab);
+                newCell.SetupBoardCell(this, cellId, currentPosition, false, ennemyData, ennemyPrefab);
 
                 _boardCells.Add(cellId, newCell);
             }
+        }
+        for (int i = 0; i < boardData.width; i++)
+        {
+            currentPosition.x = i * cellSprite.bounds.size.x;
+            currentPosition.y = boardData.height * cellSprite.bounds.size.y;
+
+            int cellId = i + boardData.width * boardData.height;
+
+            //Instantiate last row of cells
+            BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
+            newCell.SetupBoardCell(this, cellId, currentPosition, true, null, null);
+
+            _boardCells.Add(cellId, newCell);
         }
 
         //TODO: This is very much POG
@@ -136,7 +149,9 @@ public class Board : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId && (GetCellState(neigboursId[i]) == ECellStates.Room || GetCellState(neigboursId[i]) == ECellStates.Blocked))
+            var cellState = GetCellState(neigboursId[i]);
+            bool cellUnvisited = cellState == ECellStates.Room || cellState == ECellStates.Blocked || cellState == ECellStates.FinalLine;
+            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId && cellUnvisited)
             {
                 GameManager.Instance.AddPlayerMovement(neigboursId[i]);
                 break;

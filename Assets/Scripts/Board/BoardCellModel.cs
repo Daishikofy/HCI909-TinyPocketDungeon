@@ -15,9 +15,13 @@ public class BoardCellModel
     public UnityEvent onStateChanged;
     public UnityEvent<int> onSelected;
 
-    public BoardCellModel(int id)
+    public BoardCellModel(int id, bool isFinishLine)
     {
         this.id = id;
+        if (isFinishLine)
+        {
+            _cellState = ECellStates.FinalLine;
+        }
         onStateChanged = new UnityEvent();
         onSelected = new UnityEvent<int>();
     }
@@ -35,10 +39,12 @@ public class BoardCellModel
             }
         }
     }
+
     public ECellStates cellState 
     { 
         get => _cellState; 
         set {
+            if (_cellState == ECellStates.FinalLine) return;
             _cellState = value;
             onStateChanged.Invoke();
         }

@@ -7,4 +7,5 @@ public class CardData : ScriptableObject
 {
     public string cardName = "Default Name";
     public Sprite cardVisual;
+
 }
