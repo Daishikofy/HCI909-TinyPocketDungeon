@@ -148,13 +148,17 @@ public class Board : MonoBehaviour
                              GetValidNeighbourCell(newCellId, newCellId + 1, false)};
 
         for (int i = 0; i < 3; i++)
-        {
-            var cellState = GetCellState(neigboursId[i]);
-            bool cellUnvisited = cellState == ECellStates.Room || cellState == ECellStates.Blocked || cellState == ECellStates.FinalLine;
-            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId && cellUnvisited)
+        {  
+            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId)
             {
-                GameManager.Instance.AddPlayerMovement(neigboursId[i]);
-                break;
+                var cellState = GetCellState(neigboursId[i]);
+                bool cellUnvisited = cellState == ECellStates.Room || cellState == ECellStates.Blocked || cellState == ECellStates.FinalLine;
+
+                if (cellUnvisited)
+                {
+                    GameManager.Instance.AddPlayerMovement(neigboursId[i]);
+                    break;
+                }
             }
         }
 

@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour
 
                     if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
                     {
-                        Debug.Log("YOU WIN THE GAME");
+                        UiManager.Instance.ShowVictory();
                         break;
                     }
 
@@ -175,7 +175,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
-        Debug.Log("GAME OVER");
+        UiManager.Instance.ShowGameOver();
     }
 
 }
