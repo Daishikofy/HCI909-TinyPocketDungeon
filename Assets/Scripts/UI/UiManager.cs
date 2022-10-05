@@ -10,6 +10,10 @@ public class UiManager : MonoBehaviour
     GameObject _gameOverPanel;
     [SerializeField]
     GameObject _victoryPanel;
+    [SerializeField]
+    GamePanel _gamePanel;
+    [SerializeField]
+    GameObject _pausePanel;
 
     public static UiManager Instance { get => _instance; private set => _instance = value; }
 
@@ -22,6 +26,9 @@ public class UiManager : MonoBehaviour
 
         _gameOverPanel.SetActive(false);
         _victoryPanel.SetActive(false);
+        _pausePanel.SetActive(false);
+
+        _gamePanel.gameObject.SetActive(true);
     }
 
     public void ShowGameOver()
@@ -32,5 +39,11 @@ public class UiManager : MonoBehaviour
     public void ShowVictory()
     {
         _victoryPanel.SetActive(true);
+    }
+
+    public void PauseGame(bool value)
+    {
+        _pausePanel.SetActive(value);
+        _gamePanel.gameObject.SetActive(!value);
     }
 }
