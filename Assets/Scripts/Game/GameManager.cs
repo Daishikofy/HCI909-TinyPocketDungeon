@@ -40,7 +40,10 @@ public class GameManager : MonoBehaviour
 
         _player.transform.parent = _board.transform;
         _player.transform.position = _board.GetCellPosition(gameState.currentCellId);
+    }
 
+    private void Start()
+    {
         StartGame();
     }
 
@@ -48,21 +51,46 @@ public class GameManager : MonoBehaviour
     {
         Card[] cards = _deck.DrawCards(3);
         _hand.SetupInitialHand(cards);
+
+        gameState.ResetRemaningActions();
         //TODO: Offer player to redraw
     }
 
     public void StartTurn()
     {
-        //TODO : Block hand
-        _hand.AddCard(_deck.DrawCard());
-        gameState.remainingActions = 1;
+        //TODO : remainingActions actually depends on player state so Cretae a function in gamestate >> ResetRemaininfActions() 
+        gameState.ResetRemaningActions();
 
-        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
-            ExecuteTurnAction();
-        //If current cell is blocked
-        //// ExecuteTurnAction
-        //Else, hand is enabled, you can place a card to move
-        //TODO : Unblock hand
+        _hand.EnableHand(false);
+        UiManager.Instance.ShowDice();
+    }
+
+
+    public void DrawCard()
+    {
+        _deck.DrawCard();    
+    }
+
+    public void AddCardToHand(Card card)
+    {
+        _hand.AddCard(card);
+
+        _hand.EnableHand(true);
+
+        gameState.canAttack = true;
+        while (gameState.canAttack)
+        {
+            AttackEnnemies(1);
+        }
+
+        if (gameState.remainingActions > 0)
+        {
+            _hand.EnableHand(true);
+        }
+        else
+        {
+            OnTurnEnded();
+        }
     }
 
     public void OnCardSelected(Card card)
@@ -85,6 +113,8 @@ public class GameManager : MonoBehaviour
         _board.DisableCells();
 
         _hand.RemoveCard(_gameState.selectedCard.cardId);
+        _hand.EnableHand(false);
+
         _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
         //Must play the selected card
         //If room card
@@ -104,55 +134,53 @@ public class GameManager : MonoBehaviour
 
     public void OnRoomPlaced()
     {
-        /*
-        while (gameState.remainingActions > 0 )
-        {      
-            ExecuteTurnAction();
-            gameState.remainingActions -= 1;
-            Debug.Log("remaining actions: " + gameState.remainingActions);
+        int newCell = gameState.GetNextPlayerMovement();
+
+        _board.SetCellVisisted(gameState.currentCellId);
+        gameState.currentCellId = newCell;
+        _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
+
+        if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
+        {
+            UiManager.Instance.ShowVictory();
         }
-        OnTurnEnded();*/
-        ExecuteTurnAction();
+
+        gameState.canAttack = true;
+        AttackEnnemies(0);
+
+        gameState.remainingActions -= 1;
+
+        while (gameState.canAttack)
+        {
+            AttackEnnemies(1);
+        }
+
+        if (gameState.remainingActions > 0)
+        {
+            _hand.EnableHand(true);  
+        }
+        else
+        {
+            OnTurnEnded();
+        }
     }
 
-    public void ExecuteTurnAction()
+    private void AttackEnnemies(int actionCost)
     {
-        while (gameState.remainingActions > 0)
+        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked && gameState.remainingActions > 0)
         {
-            if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
+            _board.AttackCell(gameState.currentCellId, _player.attackPower);
+            gameState.remainingActions -= actionCost;
+
+            if (gameState.remainingActions <= 0)
             {
-                _board.AttackCell(gameState.currentCellId, _player.attackPower);
+                gameState.canAttack = false;
             }
-            else
-            {
-                //If Card == Mouvement ->
-                int newCell = gameState.GetNextPlayerMovement();
-                while (newCell != -1 && (_board.GetCellState(gameState.currentCellId) != ECellStates.Blocked))
-                {
-                    _board.SetCellVisisted(gameState.currentCellId);
-
-                    gameState.currentCellId = newCell;
-                    _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
-
-                    if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
-                    {
-                        UiManager.Instance.ShowVictory();
-                        break;
-                    }
-
-                    if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
-                    {
-                        _board.AttackCell(gameState.currentCellId, _player.attackPower);
-                    }
-
-                    newCell = gameState.GetNextPlayerMovement();
-                }
-            }
-
-            gameState.remainingActions -= 1;
         }
-        OnTurnEnded();
-        //Debug.Log("END Execute turn action");
+        else
+        {
+            gameState.canAttack = false;
+        }
     }
     
     public void OnPlayerMoved()

@@ -10,6 +10,9 @@ public class BoardCellView
     private Color defaultColor = new Color(0.7f, 0.7f, 0.0f);
     private Color hilightColor = Color.red;
     private Color enabledColor = Color.white;
+    private Color placedColor = Color.black;
+
+    private Color currentStateColor;
     public BoardCellView(BoardCell controller, Vector2 position)
     {
         this.controller = controller;
@@ -17,6 +20,7 @@ public class BoardCellView
         controller.gameObject.AddComponent<BoxCollider2D>();
 
         renderer = controller.gameObject.GetComponent<SpriteRenderer>();
+        currentStateColor = defaultColor;
 
         controller.transform.localPosition = position;
     }
@@ -24,13 +28,15 @@ public class BoardCellView
     public void OnMouseOver()
     {
         if (controller.model.isEnabled)
+        {
             renderer.color = hilightColor;
+        }
     }
 
     public void OnMouseExit()
     {
         if (controller.model.isEnabled)
-            renderer.color = enabledColor;
+            renderer.color = currentStateColor;
     }
 
     public void OnMouseDown()
@@ -42,23 +48,27 @@ public class BoardCellView
     {
         if (value)
         {
-            renderer.color = enabledColor;
+            currentStateColor = enabledColor;
         }
         else
         {
-            renderer.color = defaultColor;
+            currentStateColor = defaultColor;
         }
+
+        renderer.color = currentStateColor;
     }
 
     public void OnPlaceRoom() 
     {
         //TODO : Animations
-        renderer.color = Color.black;
+        currentStateColor = placedColor;
+        renderer.color = currentStateColor;
         controller.OnRoomPlaced();
     }
 
     public void SetCellRoom()
     {
-        renderer.color = Color.black;
+        currentStateColor = placedColor;
+        renderer.color = currentStateColor;
     }
 }

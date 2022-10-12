@@ -55,14 +55,23 @@ public class BoardCell : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return model.cellState == ECellStates.Empty;
+        //TODO: Rename function to reflect the fact that not only empty cells can be moved on
+        return model.cellState == ECellStates.Empty || model.cellState == ECellStates.Blocked;
     }
 
 
     public void PlaceRoom(CardData cardData)
     {
         //TODO: The use of cardData is a bit irrelevant for now. Look at the 01/10/2022 note about why it is like this before removing it. 
-        model.cellState = ECellStates.Room;
+        if(model.cellState == ECellStates.Blocked)
+        {
+            //ROOM HAS ENNEMY
+            Debug.Log("ROOM HAS ENNEMY");
+        }
+        else
+        {
+            model.cellState = ECellStates.Room;
+        }
         view.OnPlaceRoom();
     }
 

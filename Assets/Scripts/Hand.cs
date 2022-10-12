@@ -10,6 +10,7 @@ public class Hand : MonoBehaviour
 
     private int selectedCardId = -1;
     private int nextEmptySlot = 0;
+    private bool isEnabled = true;
 
     public void SetupInitialHand(Card[] cards)
     {
@@ -122,5 +123,24 @@ public class Hand : MonoBehaviour
     {
         selectedCardId = -1;
         GameManager.Instance.OnCardDeselected();
+    }
+
+    public void EnableHand(bool value)
+    {
+        foreach (var card in cards)
+        {
+            //TODO: card.enable(value);
+        }
+
+        if (isEnabled == value) return;
+        isEnabled = value;
+        if (isEnabled)
+        {
+            gameObject.transform.position += Vector3.up;
+        }
+        else
+        {
+            gameObject.transform.position += Vector3.down;
+        }
     }
 }
