@@ -53,16 +53,29 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
-        //TODO : Block hand
-        _hand.AddCard(_deck.DrawCard());
+        //TODO : remainingActions actually depends on player state so Cretae a function in gamestate >> ResetRemaininfActions() 
         gameState.remainingActions = 1;
 
+        _hand.EnableHand(false);
+        UiManager.Instance.ShowDice();
+    }
+
+
+
+    public void StartTurnPartTwo()
+    {
+        _deck.DrawCard();    
+    }
+
+    public void AddCardToHand(Card card)
+    {
+        _hand.AddCard(card);
+
+        _hand.EnableHand(true);
+
+        //TODO: REMOVE THE FACT THAT YOU CANNOT PLAY ON BLOCKED CELL
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked)
             ExecuteTurnAction();
-        //If current cell is blocked
-        //// ExecuteTurnAction
-        //Else, hand is enabled, you can place a card to move
-        //TODO : Unblock hand
     }
 
     public void OnCardSelected(Card card)

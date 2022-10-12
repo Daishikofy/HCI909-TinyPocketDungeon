@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.UIElements;
+using UnityEngine.Events;
 
 public class UiManager : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class UiManager : MonoBehaviour
     GamePanel _gamePanel;
     [SerializeField]
     GameObject _pausePanel;
+    [SerializeField]
+    Dice _dice;
 
     public static UiManager Instance { get => _instance; private set => _instance = value; }
 
@@ -29,6 +32,9 @@ public class UiManager : MonoBehaviour
         _pausePanel.SetActive(false);
 
         _gamePanel.gameObject.SetActive(true);
+
+        _dice.gameObject.SetActive(false);
+        _dice.SetupDice(OnDiceRolled);
     }
 
     public void ShowGameOver()
@@ -45,5 +51,22 @@ public class UiManager : MonoBehaviour
     {
         _pausePanel.SetActive(value);
         _gamePanel.gameObject.SetActive(!value);
+    }
+
+    public void ShowDice()
+    {
+        _dice.gameObject.SetActive(true);
+    }
+
+    public void OnDiceRolled()
+    {
+        GameManager.Instance.StartTurnPartTwo();
+    }
+
+    public void DrawCard(CardData data, UnityAction callback)
+    {
+        //TODO : Show card screen
+        //TODO : Only call the callback after card screen animation stoped
+        callback();
     }
 }

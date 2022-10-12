@@ -123,4 +123,21 @@ public class Hand : MonoBehaviour
         selectedCardId = -1;
         GameManager.Instance.OnCardDeselected();
     }
+
+    public void EnableHand(bool value)
+    {
+        foreach (var card in cards)
+        {
+            //TODO: card.enable(value);
+        }
+
+        if (value)
+        {
+            gameObject.transform.position -= Vector3.down * 0.5f;
+        }
+        else
+        {
+            gameObject.transform.position += Vector3.down * 0.5f;
+        }
+    }
 }
