@@ -27,7 +27,6 @@ public class Dice : MonoBehaviour
 
     private void OnMouseDown()
     {
-        Debug.Log("CLICK");
         RollDice();
     }
 

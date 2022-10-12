@@ -63,7 +63,15 @@ public class BoardCell : MonoBehaviour
     public void PlaceRoom(CardData cardData)
     {
         //TODO: The use of cardData is a bit irrelevant for now. Look at the 01/10/2022 note about why it is like this before removing it. 
-        model.cellState = ECellStates.Room;
+        if(model.cellState == ECellStates.Blocked)
+        {
+            //ROOM HAS ENNEMY
+            Debug.Log("ROOM HAS ENNEMY");
+        }
+        else
+        {
+            model.cellState = ECellStates.Room;
+        }
         view.OnPlaceRoom();
     }
 

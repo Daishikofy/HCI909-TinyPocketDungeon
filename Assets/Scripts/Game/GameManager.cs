@@ -61,7 +61,6 @@ public class GameManager : MonoBehaviour
     }
 
 
-
     public void DrawCard()
     {
         _deck.DrawCard();    
@@ -77,6 +76,15 @@ public class GameManager : MonoBehaviour
         while (gameState.canAttack)
         {
             AttackEnnemies(1);
+        }
+
+        if (gameState.remainingActions > 0)
+        {
+            _hand.EnableHand(true);
+        }
+        else
+        {
+            OnTurnEnded();
         }
     }
 
@@ -144,8 +152,7 @@ public class GameManager : MonoBehaviour
 
         if (gameState.remainingActions > 0)
         {
-            _hand.EnableHand(true);
-            
+            _hand.EnableHand(true);  
         }
         else
         {
@@ -159,6 +166,7 @@ public class GameManager : MonoBehaviour
         {
             _board.AttackCell(gameState.currentCellId, _player.attackPower);
             gameState.remainingActions -= actionCost;
+
             if (gameState.remainingActions <= 0)
             {
                 gameState.canAttack = false;

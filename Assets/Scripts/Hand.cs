@@ -10,6 +10,7 @@ public class Hand : MonoBehaviour
 
     private int selectedCardId = -1;
     private int nextEmptySlot = 0;
+    private bool isEnabled = true;
 
     public void SetupInitialHand(Card[] cards)
     {
@@ -131,13 +132,15 @@ public class Hand : MonoBehaviour
             //TODO: card.enable(value);
         }
 
-        if (value)
+        if (isEnabled == value) return;
+        isEnabled = value;
+        if (isEnabled)
         {
-            gameObject.transform.position -= Vector3.down * 0.5f;
+            gameObject.transform.position += Vector3.up;
         }
         else
         {
-            gameObject.transform.position += Vector3.down * 0.5f;
+            gameObject.transform.position += Vector3.down;
         }
     }
 }
