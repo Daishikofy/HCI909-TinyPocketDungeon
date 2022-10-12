@@ -6,6 +6,8 @@ public class Deck : MonoBehaviour
 {
     public DeckData deckData;
 
+    private CardData _currentCardData;
+
     private void Awake()
     {
         deckData = SaveLoad.LoadDeckData();
@@ -24,19 +26,34 @@ public class Deck : MonoBehaviour
 
         for (int i = 0; i < numberOfCards; i++)
         {
-            cards[i] = DrawCard();
+            DrawCardLogic();
+
+            Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
+            card.Setup(_currentCardData);
+            cards[i] = card;
         }
 
         return cards;
     }
 
-    public Card DrawCard()
+    public void DrawCard()
+    {
+        DrawCardLogic();
+        UiManager.Instance.DrawCard(_currentCardData, InstanciateCardAndAddToHand);
+    }
+
+
+    private void DrawCardLogic()
     {
         int cardId = deckData.deckCardsId[Random.Range(0, deckData.deckCardsId.Length)];
+        _currentCardData = GameManager.Instance.levelData.cardsData.allCardsData[cardId];
+    }
 
+    private void InstanciateCardAndAddToHand()
+    {
         Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
-        card.Setup(GameManager.Instance.levelData.cardsData.allCardsData[cardId]);
+        card.Setup(_currentCardData);
 
-        return card;
+        GameManager.Instance.AddCardToHand(card);
     }
 }

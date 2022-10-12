@@ -18,7 +18,6 @@ public class GameState
     public GameState ()
     {
         _playerMovementQueue = new Queue<int>();
-        ResetRemaningActions();
     }
 
     public Card selectedCard { get => _selectedCard; set => _selectedCard = value;}
