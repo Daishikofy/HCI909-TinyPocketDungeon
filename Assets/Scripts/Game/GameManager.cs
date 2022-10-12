@@ -202,6 +202,8 @@ public class GameManager : MonoBehaviour
     public void EndTurn()
     {
         _board.MoveBoard();
+        gameState.DecreaseMagicsTimer();
+
         if(_player.transform.position.y <= levelData.gameOverHeight)
         {
             GameOver();
