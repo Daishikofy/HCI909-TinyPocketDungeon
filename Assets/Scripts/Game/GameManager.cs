@@ -96,10 +96,10 @@ public class GameManager : MonoBehaviour
     {
         gameState.selectedCard = card;
         //IF MAGIC CARD
-        ////ENABLE PLAYER
-        //IF ROOM CARD
-        _board.EnableCellsAroundCell(_gameState.currentCellId);
-        //Must highlight the correct cells acording to the type of the card
+        if (card.cardData.cardMagic == ECardMagic.PlayerMovement)
+            _board.EnableCellsAroundCell(_gameState.currentCellId);
+        else
+            _board.EnableCell(_gameState.currentCellId);
     }
 
     public void OnCardDeselected()
@@ -114,18 +114,19 @@ public class GameManager : MonoBehaviour
         _hand.RemoveCard(_gameState.selectedCard.cardId);
         _hand.EnableHand(false);
 
-        _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
-        //Must play the selected card
-        //If room card
-        //--> Give card to selected cell
-        //--> Move player to cell
-        //--> Remaining cards that can be played in this turn -= 1
-        //If item card
-        //--> ItemCard.boost
+        if (id != gameState.currentCellId)
+            _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
+        else
+            UseMagic();
         
         gameState.selectedCard = null;
     }
 
+    private void UseMagic()
+    {
+        levelData.cardsData.cardMagics[(int)gameState.selectedCard.cardData.cardMagic]();
+        TryToEndTurn();
+    }
     public void AddPlayerMovement(int cellId)
     {
         gameState.AddCellToPlayerMovement(cellId);
@@ -153,19 +154,23 @@ public class GameManager : MonoBehaviour
         {
             AttackEnnemies(1);
         }
-        Debug.Log("Empty hand: " + _hand.IsEmpty());
 
-        if (_hand.IsEmpty())
+        TryToEndTurn();
+    }
+
+    private void TryToEndTurn()
+    {
+        if (gameState.remainingActions <= 0)
         {
             OnTurnEnded();
         }
-        if (gameState.remainingActions <= 0)
+        else if (_hand.IsEmpty())
         {
             OnTurnEnded();
         }
         else
         {
-            _hand.EnableHand(true);  
+            _hand.EnableHand(true);
         }
     }
 

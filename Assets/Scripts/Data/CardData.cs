@@ -6,6 +6,6 @@ using UnityEngine;
 public class CardData : ScriptableObject
 {
     public string cardName = "Default Name";
+    public ECardMagic cardMagic = ECardMagic.PlayerMovement;
     public Sprite cardVisual;
-
 }

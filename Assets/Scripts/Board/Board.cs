@@ -73,6 +73,7 @@ public class Board : MonoBehaviour
         _boardCells[0].SetCellRoom();
     }
 
+
     public Vector2 GetCellPosition(int cellId)
     {
         return _boardCells[cellId].transform.position;
@@ -91,6 +92,12 @@ public class Board : MonoBehaviour
     public void AttackCell(int cellId, int damages)
     {
         _boardCells[cellId].AttackCell(damages);
+    }
+    public void EnableCell(int currentCellId)
+    {
+        _enabledCells.Clear();
+        _boardCells[currentCellId].EnableCell(true);
+        _enabledCells.Add(currentCellId);
     }
 
     public void EnableCellsAroundCell(int cellId)

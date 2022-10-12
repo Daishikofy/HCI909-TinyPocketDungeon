@@ -42,8 +42,6 @@ public class Card : DragAndDropElement
         view.Deselect();
     }
 
-
-
     private void OnMouseEnter()
     {
         view.OnMouseEnter();
