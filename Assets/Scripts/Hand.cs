@@ -10,7 +10,7 @@ public class Hand : MonoBehaviour
 
     private int selectedCardId = -1;
     private int nextEmptySlot = 0;
-    private bool isEnabled = true;
+    private bool isEnabled = false;
 
     public void SetupInitialHand(Card[] cards)
     {

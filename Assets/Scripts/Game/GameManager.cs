@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
     {
         Card[] cards = _deck.DrawCards(3);
         _hand.SetupInitialHand(cards);
+        _hand.EnableHand(true);
 
         gameState.ResetRemaningActions();
         //TODO: Offer player to redraw
@@ -88,7 +89,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            OnTurnEnded();
+            EndTurn();
         }
     }
 
@@ -162,11 +163,11 @@ public class GameManager : MonoBehaviour
     {
         if (gameState.remainingActions <= 0)
         {
-            OnTurnEnded();
+            EndTurn();
         }
         else if (_hand.IsEmpty())
         {
-            OnTurnEnded();
+            EndTurn();
         }
         else
         {
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
         //ExecuteTurnAction();
     }
 
-    public void OnTurnEnded()
+    public void EndTurn()
     {
         _board.MoveBoard();
         if(_player.transform.position.y <= levelData.gameOverHeight)

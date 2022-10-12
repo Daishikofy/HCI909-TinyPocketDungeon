@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CardData 1
   m_EditorClassIdentifier: 
   cardName: Card 1
-  cardMagic: 1
+  cardMagic: 0
   cardVisual: {fileID: 21300000, guid: 77d893961c89fc542804d60a9154298c, type: 3}
