@@ -108,6 +108,11 @@ public class Hand : MonoBehaviour
         //Debug.Log(" - - END REMOTION - -");
     }
 
+    public bool IsEmpty()
+    {
+        return nextEmptySlot == 0;
+    }
+
     public void OnCardSelected(int cardId)
     {
         if (selectedCardId == cardId) return;
