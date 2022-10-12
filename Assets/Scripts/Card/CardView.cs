@@ -1,6 +1,8 @@
 using UnityEngine;
 using TMPro;
 using System.Threading.Tasks;
+using System.Collections;
+using System;
 
 public class CardView
 {
@@ -51,27 +53,16 @@ public class CardView
     {
         if (isSelected == true) return;
 
-        Vector2 startPosition = controller.transform.position;
-        Vector2 targetPosition = new Vector3(startPosition.x, startPosition.y + 1);
-        //Vector2 currentPosition = startPosition;
-        //disable collider during animation
+        //disable colliders during animation
         Collider2D[] colliders = controller.GetComponents<Collider2D>();
         foreach (Collider2D col in colliders)
         {
             col.enabled = false;
         }
 
-        float velocity = 0.01f;
+        controller.StartCoroutine(SelectCoroutine());
 
-        //lerp between start and final position
-        while (new Vector2(controller.transform.position.x, controller.transform.position.y) != targetPosition)
-        {
-            controller.transform.position = Vector2.Lerp(controller.transform.position, targetPosition, velocity);
-            velocity += 0.0001f;
-            await Task.Delay(1);
-        }
-
-        //enable collider again
+        //enable colliders again
         foreach (Collider2D col in colliders)
         {
             col.enabled = true;
@@ -80,15 +71,66 @@ public class CardView
         isSelected = true;
         controller.OnSelected(true);
     }
-    public void Deselect()
+    public async void Deselect()
     {
         if (isSelected == false) return;
 
-        Vector2 newPosition = controller.transform.position;
-        newPosition.y -= 1;
-        controller.transform.position = newPosition;
-        isSelected = false;
+        //disable colliders during animation
+        Collider2D[] colliders = controller.GetComponents<Collider2D>();
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = false;
+        }
 
+        controller.StartCoroutine(DeselectCoroutine());
+
+        //enable colliders again
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = true;
+        }
+
+        isSelected = false;
         controller.OnSelected(false);
+    }
+
+    IEnumerator SelectCoroutine()
+    {
+        Vector2 startPosition = controller.transform.position;
+        Vector2 targetPosition = new Vector2(startPosition.x, startPosition.y + 1); //up one
+
+        float velocity = 0.01f;
+        float maxVelocity = 0.4f;
+
+        //lerp between start and final position
+        while (Mathf.Abs(targetPosition.y - controller.transform.position.y) > 0.1f)
+        {
+            controller.transform.position = Vector2.Lerp(controller.transform.position, targetPosition, velocity);
+            if (velocity < maxVelocity)
+                velocity += 0.001f; //smooth anim
+
+            yield return null; //keep going until while loop is finished
+        }
+        yield return new WaitForSeconds(1);
+    }
+
+    private IEnumerator DeselectCoroutine()
+    {
+        Vector2 startPosition = controller.transform.position;
+        Vector2 targetPosition = new Vector2(startPosition.x, startPosition.y - 1); //down one
+
+        float velocity = 0.01f;
+        float maxVelocity = 0.4f;
+
+        //lerp between start and final position
+        while (Mathf.Abs(targetPosition.y - controller.transform.position.y) > 0.1f)
+        {
+            controller.transform.position = Vector2.Lerp(controller.transform.position, targetPosition, velocity);
+            if (velocity < maxVelocity)
+                velocity += 0.001f; //smooth anim
+
+            yield return null; //keep going until while loop is finished
+        }
+        yield return new WaitForSeconds(1);
     }
 }
