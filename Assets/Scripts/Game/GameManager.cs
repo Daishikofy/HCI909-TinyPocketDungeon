@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private GameState _gameState;
     public GameState gameState { get => _gameState; private set => _gameState = value; }
+    public Player player { get => _player; private set => _player = value; }
 
     private void Awake()
     {
@@ -108,15 +109,15 @@ public class GameManager : MonoBehaviour
         _board.DisableCells();
     }
 
-    public void OnCellSelected(int id)
+    public void OnCellSelected(int cellId)
     {
         _board.DisableCells();
 
         _hand.RemoveCard(_gameState.selectedCard.cardId);
         _hand.EnableHand(false);
 
-        if (id != gameState.currentCellId)
-            _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
+        if (cellId != gameState.currentCellId)
+            _board.PlaceRoom(gameState.currentCellId, cellId);
         else
             UseMagic();
         

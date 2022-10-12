@@ -146,10 +146,10 @@ public class Board : MonoBehaviour
     }
 
     //Place a card on the board
-    public void PlaceRoom(int currentCellId, int newCellId, Card card)
+    public void PlaceRoom(int currentCellId, int newCellId)
     {
         GameManager.Instance.AddPlayerMovement(newCellId);
-        _boardCells[newCellId].PlaceRoom(card.cardData);
+        _boardCells[newCellId].PlaceRoom();
     }
 
     public void OnRoomPlaced()

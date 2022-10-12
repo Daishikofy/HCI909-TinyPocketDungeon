@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class GameState 
 {
-    public float boardMovingVelocity = 0.5f;
+    public float boardMovingVelocity = 1f;
     public int currentCellId = 0;
 
-    private int maxActions = 1;
+    private int _maxActions = 1;
 
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
@@ -24,6 +24,14 @@ public class GameState
 
     public Card selectedCard { get => _selectedCard; set => _selectedCard = value;}
 
+    public void AddToMaxActions(int actionsBoost)
+    {
+        _maxActions += actionsBoost;
+    }
+    public void SetBoardVelocity(float velocity)
+    {
+        boardMovingVelocity = velocity;
+    }
     public int remainingActions 
     { 
         get => _ramainingActions; 
@@ -40,7 +48,7 @@ public class GameState
 
     public void ResetRemaningActions()
     {
-        remainingActions = maxActions;
+        remainingActions = _maxActions;
     }
 
     public void AddCellToPlayerMovement(int cellId)

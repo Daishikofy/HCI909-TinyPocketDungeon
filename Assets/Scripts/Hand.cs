@@ -141,11 +141,11 @@ public class Hand : MonoBehaviour
         isEnabled = value;
         if (isEnabled)
         {
-            gameObject.transform.position += Vector3.up;
+            gameObject.transform.position += Vector3.up/2.0f;
         }
         else
         {
-            gameObject.transform.position += Vector3.down;
+            gameObject.transform.position += Vector3.down/2.0f;
         }
     }
 }

@@ -20,16 +20,16 @@ public class AllCardsData : ScriptableObject
 
     private static void SwordMagic()
     {
-        Debug.Log("SWORD MAGIC");
+        GameManager.Instance.player.AddToAttackPower(1);
     }
 
     private static void PegasusBootsMagic()
     {
-        Debug.Log("BOOTS MAGIC");
+        GameManager.Instance.gameState.AddToMaxActions(2);
     }
 
     private static void HourglassMagic()
     {
-        Debug.Log("HOURGLASS MAGIC");
+        GameManager.Instance.gameState.SetBoardVelocity(0.5f);
     }
 }
