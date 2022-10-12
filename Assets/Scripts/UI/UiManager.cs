@@ -60,7 +60,7 @@ public class UiManager : MonoBehaviour
 
     public void OnDiceRolled()
     {
-        GameManager.Instance.StartTurnPartTwo();
+        GameManager.Instance.DrawCard();
     }
 
     public void DrawCard(CardData data, UnityAction callback)

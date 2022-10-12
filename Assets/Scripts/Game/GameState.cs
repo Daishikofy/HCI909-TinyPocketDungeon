@@ -10,6 +10,8 @@ public class GameState
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
     private int _ramainingActions = 1;
+
+    public bool canAttack = true;
     //We could use a ItemTimer which would tell how long the item takes effect and have an ItemEndedAction that we could just call when the Item Timer gets to 0
     //this action would be seted by the item upon use.
 

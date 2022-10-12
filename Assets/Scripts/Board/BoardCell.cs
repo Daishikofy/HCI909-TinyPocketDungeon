@@ -55,7 +55,8 @@ public class BoardCell : MonoBehaviour
 
     public bool IsEmpty()
     {
-        return model.cellState == ECellStates.Empty;
+        //TODO: Rename function to reflect the fact that not only empty cells can be moved on
+        return model.cellState == ECellStates.Empty || model.cellState == ECellStates.Blocked;
     }
 
 

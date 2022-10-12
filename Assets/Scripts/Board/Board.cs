@@ -142,27 +142,6 @@ public class Board : MonoBehaviour
     public void PlaceRoom(int currentCellId, int newCellId, Card card)
     {
         GameManager.Instance.AddPlayerMovement(newCellId);
-
-        int[] neigboursId = {GetValidNeighbourCell(newCellId, newCellId + _boardData.width, true),
-                             GetValidNeighbourCell(newCellId, newCellId - 1, false),
-                             GetValidNeighbourCell(newCellId, newCellId + 1, false)};
-
-        for (int i = 0; i < 3; i++)
-        {  
-            if (neigboursId[i] >= 0 && neigboursId[i] != currentCellId)
-            {
-                var cellState = GetCellState(neigboursId[i]);
-                bool cellUnvisited = cellState == ECellStates.Room || cellState == ECellStates.Blocked || cellState == ECellStates.FinalLine;
-
-                if (cellUnvisited)
-                {
-                    GameManager.Instance.AddPlayerMovement(neigboursId[i]);
-                    break;
-                }
-            }
-        }
-
-        //PlaceCard will trigger the player movement. It should only be executed after all player movment have been registred.
         _boardCells[newCellId].PlaceRoom(card.cardData);
     }
 
