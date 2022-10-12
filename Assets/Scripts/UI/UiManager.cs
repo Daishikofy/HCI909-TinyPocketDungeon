@@ -46,4 +46,9 @@ public class UiManager : MonoBehaviour
         _pausePanel.SetActive(value);
         _gamePanel.gameObject.SetActive(!value);
     }
+
+    public void UpdateRemainingMoves(int moves)
+    {
+        _gamePanel.UpdateRemainingMoves(moves);
+    }
 }

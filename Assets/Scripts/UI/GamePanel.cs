@@ -10,6 +10,9 @@ public class GamePanel : MonoBehaviour
     [SerializeField]
     TextMeshProUGUI _pointsText;
 
+    [SerializeField]
+    TextMeshProUGUI _remainingMoves;
+
     private void Awake()
     {
         _pauseButton.onClick.AddListener(PauseButtonClicked);
@@ -41,5 +44,10 @@ public class GamePanel : MonoBehaviour
         }
 
         _pointsText.text = newText;
+    }
+
+    public void UpdateRemainingMoves(int moves)
+    {
+        _remainingMoves.text = moves.ToString();
     }
 }
