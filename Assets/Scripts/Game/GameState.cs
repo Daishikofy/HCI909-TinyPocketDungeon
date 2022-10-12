@@ -7,6 +7,8 @@ public class GameState
     public float boardMovingVelocity = 0.5f;
     public int currentCellId = 0;
 
+    private int maxActions = 1;
+
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
     private int _ramainingActions = 1;
@@ -26,12 +28,19 @@ public class GameState
     { 
         get => _ramainingActions; 
         set {
-            _ramainingActions = value; 
+            _ramainingActions = value;
+            UiManager.Instance.UpdateRemainingMoves(remainingActions);
+
             if (remainingActions <= 0)
             {
                 //GameManager.Instance.OnTurnEnded();
             }
         } 
+    }
+
+    public void ResetRemaningActions()
+    {
+        remainingActions = maxActions;
     }
 
     public void AddCellToPlayerMovement(int cellId)

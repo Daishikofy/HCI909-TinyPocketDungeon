@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class UiManager : MonoBehaviour
 {
     static private UiManager _instance;
-    
+
     [SerializeField]
     GameObject _gameOverPanel;
     [SerializeField]
@@ -51,6 +51,11 @@ public class UiManager : MonoBehaviour
     {
         _pausePanel.SetActive(value);
         _gamePanel.gameObject.SetActive(!value);
+    }
+
+    public void UpdateRemainingMoves(int moves)
+    {
+        _gamePanel.UpdateRemainingMoves(moves);
     }
 
     public void ShowDice()

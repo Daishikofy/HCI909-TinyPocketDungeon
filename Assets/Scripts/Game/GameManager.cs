@@ -40,7 +40,10 @@ public class GameManager : MonoBehaviour
 
         _player.transform.parent = _board.transform;
         _player.transform.position = _board.GetCellPosition(gameState.currentCellId);
+    }
 
+    private void Start()
+    {
         StartGame();
     }
 
@@ -48,13 +51,15 @@ public class GameManager : MonoBehaviour
     {
         Card[] cards = _deck.DrawCards(3);
         _hand.SetupInitialHand(cards);
+
+        gameState.ResetRemaningActions();
         //TODO: Offer player to redraw
     }
 
     public void StartTurn()
     {
         //TODO : remainingActions actually depends on player state so Cretae a function in gamestate >> ResetRemaininfActions() 
-        gameState.remainingActions = 1;
+        gameState.ResetRemaningActions();
 
         _hand.EnableHand(false);
         UiManager.Instance.ShowDice();
