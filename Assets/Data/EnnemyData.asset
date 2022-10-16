@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EnnemyData
   m_EditorClassIdentifier: 
   loot: fbffffff
-  maxLifePoints: 2
+  maxLifePoints: 1
   sprite: {fileID: 21300000, guid: d99462883de5e4448b9a449f75e3a6f5, type: 3}

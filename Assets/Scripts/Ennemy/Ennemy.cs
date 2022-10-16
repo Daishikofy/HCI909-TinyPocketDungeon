@@ -4,11 +4,14 @@ using UnityEngine.Events;
 
 public class Ennemy : MonoBehaviour
 {
-    private EnnemyModel _model;
-    public EnnemyView _view;
+    public EnnemyModel _model;
+    private EnnemyView _view;
 
     [SerializeField]
     private SpriteRenderer _pawnThumbnail;
+
+    [SerializeField]
+    private SpriteRenderer[] _lifePoints;
 
     private UnityAction onDefeatedCallback;
     public void SetupEnnemy(EnnemyData data, UnityAction onDefeatedCallback)
@@ -16,7 +19,7 @@ public class Ennemy : MonoBehaviour
         _model = new EnnemyModel(data);
         this.onDefeatedCallback = onDefeatedCallback;
         _model.onDefeated.AddListener(OnDefeated);
-        _view = new EnnemyView(this, _model, _pawnThumbnail);
+        _view = new EnnemyView(this, _model, _pawnThumbnail, _lifePoints);
     }
 
     private void OnDefeated()
