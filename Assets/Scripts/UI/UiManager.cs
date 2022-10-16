@@ -17,6 +17,8 @@ public class UiManager : MonoBehaviour
     GameObject _pausePanel;
     [SerializeField]
     Dice _dice;
+    [SerializeField]
+    UIEffectsPanel _uIEffectsPanel;
 
     public static UiManager Instance { get => _instance; private set => _instance = value; }
 
@@ -80,5 +82,10 @@ public class UiManager : MonoBehaviour
         //TODO : Only call the callback after card screen animation stoped
         _gamePanel.EnablePauseButton(true);
         callback();
+    }
+
+    public void LootEarned(int coins, UnityAction callback)
+    {
+        _uIEffectsPanel.OnLootEarned(coins, callback);
     }
 }

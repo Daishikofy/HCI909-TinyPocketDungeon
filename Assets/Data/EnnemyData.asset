@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   loot: fbffffff
   maxLifePoints: 2
-  sprite: {fileID: 21300000, guid: 1336bf3adfbbad1419eb0e334397b1a2, type: 3}
+  sprite: {fileID: 21300000, guid: d99462883de5e4448b9a449f75e3a6f5, type: 3}

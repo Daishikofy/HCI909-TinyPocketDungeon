@@ -43,7 +43,7 @@ public class Ennemy : MonoBehaviour
             }
         }
             GameManager.Instance.GetLoot(cards, money);
-        onDefeatedCallback();
+        UiManager.Instance.LootEarned(money, onDefeatedCallback);
     }
 
     public void OnAttacked(int damages)

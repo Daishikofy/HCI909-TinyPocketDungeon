@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
         _hand.EnableHand(true);
 
         gameState.canAttack = true;
-        while (gameState.canAttack)
+        if (gameState.canAttack)
         {
             AttackEnnemies(1);
         }
@@ -152,7 +152,17 @@ public class GameManager : MonoBehaviour
 
         gameState.remainingActions -= 1;
 
-        while (gameState.canAttack)
+        if(gameState.canAttack)
+        {
+            AttackEnnemies(1);
+        }
+
+        TryToEndTurn();
+    }
+
+    public void OnEnnemyDefeated()
+    {
+        if (gameState.canAttack)
         {
             AttackEnnemies(1);
         }
