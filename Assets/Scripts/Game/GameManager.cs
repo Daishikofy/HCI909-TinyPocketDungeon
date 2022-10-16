@@ -58,7 +58,6 @@ public class GameManager : MonoBehaviour
 
     public void StartTurn()
     {
-        //TODO : remainingActions actually depends on player state so Cretae a function in gamestate >> ResetRemaininfActions() 
         gameState.ResetRemaningActions();
 
         _hand.EnableHand(false);
@@ -154,14 +153,19 @@ public class GameManager : MonoBehaviour
         {
             AttackEnnemies(1);
         }
+        Debug.Log("Empty hand: " + _hand.IsEmpty());
 
-        if (gameState.remainingActions > 0)
+        if (_hand.IsEmpty())
         {
-            _hand.EnableHand(true);  
+            OnTurnEnded();
+        }
+        if (gameState.remainingActions <= 0)
+        {
+            OnTurnEnded();
         }
         else
         {
-            OnTurnEnded();
+            _hand.EnableHand(true);  
         }
     }
 
