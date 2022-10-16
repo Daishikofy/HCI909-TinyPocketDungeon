@@ -29,7 +29,8 @@ public class PausePanel : MonoBehaviour
 
     private void HomeButtonClicked()
     {
-        throw new System.NotImplementedException();
+        /*throw new System.NotImplementedException();*/
+        UiManager.Instance.ShowLevelMenu(true);
     }
 
     private void PlayButtonClicked()

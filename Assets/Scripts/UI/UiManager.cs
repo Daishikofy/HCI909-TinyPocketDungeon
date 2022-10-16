@@ -16,6 +16,8 @@ public class UiManager : MonoBehaviour
     [SerializeField]
     GameObject _pausePanel;
     [SerializeField]
+    GameObject _levelsPanel;
+    [SerializeField]
     Dice _dice;
 
     public static UiManager Instance { get => _instance; private set => _instance = value; }
@@ -30,6 +32,7 @@ public class UiManager : MonoBehaviour
         _gameOverPanel.SetActive(false);
         _victoryPanel.SetActive(false);
         _pausePanel.SetActive(false);
+        _levelsPanel.SetActive(false);
 
         _gamePanel.gameObject.SetActive(true);
 
@@ -47,6 +50,12 @@ public class UiManager : MonoBehaviour
         _victoryPanel.SetActive(true);
     }
 
+    public void ShowLevelMenu(bool value)
+    {
+        _levelsPanel.SetActive(true);
+        _gamePanel.gameObject.SetActive(!value);
+    }
+
     public void PauseGame(bool value)
     {
         _pausePanel.SetActive(value);
@@ -57,6 +66,10 @@ public class UiManager : MonoBehaviour
     {
         _gamePanel.UpdateRemainingMoves(moves);
     }
+   /* public void ChooseLevel(int levelIndex)
+    {
+        _levelsPanel.ChooseLevel(levelIndex);
+    }*/
 
     public void ShowDice()
     {
