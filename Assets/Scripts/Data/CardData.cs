@@ -7,5 +7,7 @@ public class CardData : ScriptableObject
 {
     public string cardName = "Default Name";
     public Sprite cardVisual;
+    public AudioClip selectSound;
+    public AudioClip deselectSound;
 
 }
