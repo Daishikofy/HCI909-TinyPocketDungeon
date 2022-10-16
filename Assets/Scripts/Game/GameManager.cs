@@ -193,6 +193,15 @@ public class GameManager : MonoBehaviour
             gameState.canAttack = false;
         }
     }
+
+    public void GetLoot(List<Card> cards, int money)
+    {
+        foreach(var card in cards)
+        {
+            _hand.AddCard(card);
+        }
+        gameState.currentMoney += money;
+    }
     
     public void OnPlayerMoved()
     {

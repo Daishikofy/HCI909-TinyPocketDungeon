@@ -4,16 +4,20 @@ using UnityEngine;
 
 public class GameState 
 {
+    private int _currentMoney = 0;
+    public int currentMoney { get => _currentMoney; set { _currentMoney = value; UiManager.Instance.UpdateScore(_currentMoney); } }
+
     public float boardMovingVelocity = 1f;
     public int currentCellId = 0;
 
     private int _maxActions = 1;
+    public int maxActions { get => _maxActions; set => _maxActions = value; }
 
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
     private int _ramainingActions = 1;
 
-    private Dictionary<ECardMagic, int> _magicsTimer;
+    private int[] _magicsTimer = {0, 0, 0, 0};
 
     public bool canAttack = true;
     //We could use a ItemTimer which would tell how long the item takes effect and have an ItemEndedAction that we could just call when the Item Timer gets to 0
@@ -22,11 +26,6 @@ public class GameState
     public GameState ()
     {
         _playerMovementQueue = new Queue<int>();
-        _magicsTimer = new Dictionary<ECardMagic, int>();
-
-        _magicsTimer.Add(ECardMagic.PegasusBoots, 0);
-        _magicsTimer.Add(ECardMagic.Hourglass, 0);
-        _magicsTimer.Add(ECardMagic.Sword, 0);
     }
 
     public Card selectedCard { get => _selectedCard; set => _selectedCard = value;}
@@ -40,65 +39,25 @@ public class GameState
         } 
     }
 
-    public void SetMaxActions(int maxActions, int turns)
+    public void SetMagicTimer(int index, int value)
     {
-        _maxActions = maxActions;
-        _magicsTimer[ECardMagic.PegasusBoots] += turns;
-    }
-    private void ResetMaxActions()
-    {
-        _maxActions = 1;
+        _magicsTimer[index] = value;
     }
 
-    public void SetBoardVelocity(float velocity, int turns)
+    public void DecreaseMagicsTimer()
     {
-        boardMovingVelocity = velocity;
-        _magicsTimer[ECardMagic.Hourglass] += turns;
-    }
-    private void ResetBoardVelocity()
-    {
-        boardMovingVelocity = 1;
-    }
-
-    public void SetPlayerPower(int power, int turns)
-    {
-        GameManager.Instance.player.AddToAttackPower(power);
-        _magicsTimer[ECardMagic.Sword] += turns;
-    }
-    public void ResetPlayerPower()
-    {
-        GameManager.Instance.player.AddToAttackPower(1);
-    }
-
-        public void DecreaseMagicsTimer()
-    {
-        foreach (var timer in _magicsTimer)
+        for (int i = 1; i < _magicsTimer.Length; i++)
         {
-            int remainingTime = timer.Value;
-            if (remainingTime > 0)
+            if (_magicsTimer[i] > 0)
             {
-                remainingTime = timer.Value - 1;
-                if (timer.Value < 1)
+                _magicsTimer[i] -= 1;
+                if (_magicsTimer[i] < 1)
                 {
-                    switch (timer.Key)
-                    {
-                        case ECardMagic.PlayerMovement:
-                            break;
-                        case ECardMagic.Sword:
-                            ResetPlayerPower();
-                            break;
-                        case ECardMagic.Hourglass:
-                            ResetBoardVelocity();
-                            break;
-                        case ECardMagic.PegasusBoots:
-                            ResetMaxActions();
-                            break;
-                        default:
-                            break;
-                    }
+                    //If the timer for the magic of index i gets to 0, call the function
+                    //to remove the magic's effect.
+                    GameManager.Instance.levelData.cardsData.disableCardMagic[i]();
                 }
             }
-            _magicsTimer[timer.Key] = remainingTime;
         }
     }
 

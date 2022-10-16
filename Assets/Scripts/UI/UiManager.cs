@@ -58,8 +58,14 @@ public class UiManager : MonoBehaviour
         _gamePanel.UpdateRemainingMoves(moves);
     }
 
+    public void UpdateScore(int newScore)
+    {
+        _gamePanel.UpdateScore(newScore);
+    }
+
     public void ShowDice()
     {
+        _gamePanel.EnablePauseButton(false);
         _dice.gameObject.SetActive(true);
     }
 
@@ -72,6 +78,7 @@ public class UiManager : MonoBehaviour
     {
         //TODO : Show card screen
         //TODO : Only call the callback after card screen animation stoped
+        _gamePanel.EnablePauseButton(true);
         callback();
     }
 }

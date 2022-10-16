@@ -27,7 +27,7 @@ public class GamePanel : MonoBehaviour
         UiManager.Instance.PauseGame(true);
     }
 
-    public void UpdatePoints(int points)
+    public void UpdateScore(int points)
     {
         string newText = "";
         if (points >= 1000)
@@ -58,5 +58,10 @@ public class GamePanel : MonoBehaviour
     private void SkipTurnButtonClicked()
     {
         GameManager.Instance.EndTurn();
+    }
+
+    public void EnablePauseButton(bool value)
+    {
+        _skipTurn.interactable = value;
     }
 }
