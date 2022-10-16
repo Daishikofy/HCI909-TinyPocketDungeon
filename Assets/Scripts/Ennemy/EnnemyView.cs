@@ -31,5 +31,6 @@ public class EnnemyView
         _controller.gameObject.SetActive(false);
         //TODO : Death animation
         //TODO : Death sound effects
+        _controller.GetLoot();
     }
 }

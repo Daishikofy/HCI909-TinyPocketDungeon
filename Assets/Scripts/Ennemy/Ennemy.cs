@@ -9,11 +9,13 @@ public class Ennemy : MonoBehaviour
 
     [SerializeField]
     private SpriteRenderer _pawnThumbnail;
+
+    private UnityAction onDefeatedCallback;
     public void SetupEnnemy(EnnemyData data, UnityAction onDefeatedCallback)
     {
         _model = new EnnemyModel(data);
-        _model.onDefeated.AddListener(onDefeatedCallback);
-        _model.onDefeated.AddListener(_view.OnDefeated);
+        this.onDefeatedCallback = onDefeatedCallback;
+        _model.onDefeated.AddListener(OnDefeated);
         _view = new EnnemyView(this, _model, _pawnThumbnail);
     }
 
@@ -21,7 +23,7 @@ public class Ennemy : MonoBehaviour
     {
         _view.OnDefeated();
     }
-    private void GetLoot()
+    public void GetLoot()
     {
         List<Card> cards = new List<Card>();
         int money = 0;
@@ -41,6 +43,7 @@ public class Ennemy : MonoBehaviour
             }
         }
             GameManager.Instance.GetLoot(cards, money);
+        onDefeatedCallback();
     }
 
     public void OnAttacked(int damages)
