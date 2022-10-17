@@ -160,7 +160,7 @@ public class GameManager : MonoBehaviour
         TryToEndTurn();
     }
 
-    public void OnEnnemyDefeated()
+    public void OnEnnemyAttacked()
     {
         if (gameState.canAttack)
         {

@@ -101,7 +101,7 @@ public class BoardCell : MonoBehaviour
     private void OnEnnemyDefeated()
     {
         model.cellState = ECellStates.Connected;
-        GameManager.Instance.OnEnnemyDefeated();
+        GameManager.Instance.OnEnnemyAttacked();
     }
 
 
