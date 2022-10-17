@@ -190,6 +190,8 @@ public class GameManager : MonoBehaviour
     {
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked && gameState.remainingActions > 0)
         {
+            _player.Attack();
+
             _board.AttackCell(gameState.currentCellId, _player.attackPower);
             gameState.remainingActions -= actionCost;
 
