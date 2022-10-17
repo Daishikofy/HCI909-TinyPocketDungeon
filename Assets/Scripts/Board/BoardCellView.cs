@@ -4,44 +4,48 @@ using UnityEngine;
 
 public class BoardCellView 
 {
-    private BoardCell controller;
-    private SpriteRenderer renderer;
+    private BoardCell _controller;
+    private SpriteRenderer _renderer;
 
-    private Color defaultColor = new Color(0.7f, 0.7f, 0.0f);
-    private Color hilightColor = Color.red;
-    private Color enabledColor = Color.white;
-    private Color placedColor = Color.black;
-
+    private Color defaultColor = new Color(0.8f, 0.8f, 0.8f);
+    private Color hilightColor = new Color(0.7f, 0.2f, 0.4f);
+    private Color enabledColor = new Color(0.2f, 0.8f, 0.8f);
     private Color currentStateColor;
-    public BoardCellView(BoardCell controller, Vector2 position)
+
+    private BoardCellData _cellData;
+
+    public BoardCellView(BoardCell controller, Vector2 position, BoardCellData boardCellData)
     {
-        this.controller = controller;
+        _controller = controller;
+        _cellData = boardCellData;
 
-        controller.gameObject.AddComponent<BoxCollider2D>();
+        _controller.gameObject.AddComponent<BoxCollider2D>();
 
-        renderer = controller.gameObject.GetComponent<SpriteRenderer>();
+        _renderer = _controller.gameObject.GetComponent<SpriteRenderer>();
         currentStateColor = defaultColor;
+        _renderer.color = defaultColor;
+        _renderer.sprite = _cellData.cellSprites.empty;
 
-        controller.transform.localPosition = position;
+        _controller.transform.localPosition = position;
     }
 
     public void OnMouseOver()
     {
-        if (controller.model.isEnabled)
+        if (_controller.model.isEnabled)
         {
-            renderer.color = hilightColor;
+            _renderer.color = hilightColor;
         }
     }
 
     public void OnMouseExit()
     {
-        if (controller.model.isEnabled)
-            renderer.color = currentStateColor;
+        if (_controller.model.isEnabled)
+            _renderer.color = currentStateColor;
     }
 
     public void OnMouseDown()
     {
-        controller.model.isSelected = true;
+        _controller.model.isSelected = true;
     }
 
     public void OnEnabled(bool value)
@@ -55,20 +59,24 @@ public class BoardCellView
             currentStateColor = defaultColor;
         }
 
-        renderer.color = currentStateColor;
+        _renderer.color = currentStateColor;
     }
 
     public void OnPlaceRoom() 
     {
         //TODO : Animations
-        currentStateColor = placedColor;
-        renderer.color = currentStateColor;
-        controller.OnRoomPlaced();
+        currentStateColor = defaultColor;
+        _renderer.color = currentStateColor;
+
+        _renderer.sprite = _cellData.cellSprites.occupied;
+        _controller.OnRoomPlaced();
     }
 
     public void SetCellRoom()
     {
-        currentStateColor = placedColor;
-        renderer.color = currentStateColor;
+        currentStateColor = defaultColor;
+        _renderer.color = currentStateColor;
+
+        _renderer.sprite = _cellData.cellSprites.occupied;
     }
 }

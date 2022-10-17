@@ -18,7 +18,7 @@ public class BoardCell : MonoBehaviour
     public BoardCellModel model { get => _model; private set => _model = value; }
     public BoardCellView view { get => _view; private set => _view = value; }
 
-    public void SetupBoardCell(Board board, int id, Vector2 position, bool isFinishLine, EnnemyData ennemyData, Ennemy ennemyPrefab)
+    public void SetupBoardCell(Board board, int id, Vector2 position, BoardCellData boardCellData,bool isFinishLine, EnnemyData ennemyData, Ennemy ennemyPrefab)
     {
         gameObject.name = "Cell_" + id;
 
@@ -27,7 +27,7 @@ public class BoardCell : MonoBehaviour
         model = new BoardCellModel(id, isFinishLine);
         model.onSelected.AddListener(board.OnCellSelected);
 
-        view = new BoardCellView(this, position);
+        view = new BoardCellView(this, position, boardCellData);
 
         _collider = GetComponent<Collider2D>();
 
@@ -38,7 +38,6 @@ public class BoardCell : MonoBehaviour
             //Instanciate new ennemy
             model.ennemy = Instantiate(ennemyPrefab, _ennemySpawnPoint);
             model.ennemy.SetupEnnemy(ennemyData, OnEnnemyDefeated);
-            //TODO: Maybe connect to controller directly?
             SetCellRoom();
         }
     }
@@ -53,16 +52,14 @@ public class BoardCell : MonoBehaviour
         return _model.id;
     }
 
-    public bool IsEmpty()
+    public bool IsWalkable()
     {
-        //TODO: Rename function to reflect the fact that not only empty cells can be moved on
         return model.cellState == ECellStates.Empty || model.cellState == ECellStates.Blocked;
     }
 
 
     public void PlaceRoom()
     {
-        //TODO: The use of cardData is a bit irrelevant for now. Look at the 01/10/2022 note about why it is like this before removing it. 
         if(model.cellState == ECellStates.Blocked)
         {
             //ROOM HAS ENNEMY
