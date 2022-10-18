@@ -4,14 +4,20 @@ using UnityEngine;
 
 public class GameState 
 {
-    public float boardMovingVelocity = 0.5f;
+    private int _currentMoney = 0;
+    public int currentMoney { get => _currentMoney; set { _currentMoney = value; UiManager.Instance.UpdateScore(_currentMoney); } }
+
+    public float boardMovingVelocity = 1f;
     public int currentCellId = 0;
 
-    private int maxActions = 1;
+    private int _maxActions = 1;
+    public int maxActions { get => _maxActions; set => _maxActions = value; }
 
     private Queue<int> _playerMovementQueue;
     private Card _selectedCard = null;
     private int _ramainingActions = 1;
+
+    private int[] _magicsTimer = {0, 0, 0, 0};
 
     public bool canAttack = true;
     //We could use a ItemTimer which would tell how long the item takes effect and have an ItemEndedAction that we could just call when the Item Timer gets to 0
@@ -30,17 +36,34 @@ public class GameState
         set {
             _ramainingActions = value;
             UiManager.Instance.UpdateRemainingMoves(remainingActions);
-
-            if (remainingActions <= 0)
-            {
-                //GameManager.Instance.OnTurnEnded();
-            }
         } 
+    }
+
+    public void SetMagicTimer(int index, int value)
+    {
+        _magicsTimer[index] = value;
+    }
+
+    public void DecreaseMagicsTimer()
+    {
+        for (int i = 1; i < _magicsTimer.Length; i++)
+        {
+            if (_magicsTimer[i] > 0)
+            {
+                _magicsTimer[i] -= 1;
+                if (_magicsTimer[i] < 1)
+                {
+                    //If the timer for the magic of index i gets to 0, call the function
+                    //to remove the magic's effect.
+                    GameManager.Instance.levelData.cardsData.disableCardMagic[i]();
+                }
+            }
+        }
     }
 
     public void ResetRemaningActions()
     {
-        remainingActions = maxActions;
+        remainingActions = _maxActions;
     }
 
     public void AddCellToPlayerMovement(int cellId)

@@ -19,6 +19,8 @@ public class UiManager : MonoBehaviour
     GameObject _levelsPanel;
     [SerializeField]
     Dice _dice;
+    [SerializeField]
+    UIEffectsPanel _uIEffectsPanel;
 
     public static UiManager Instance { get => _instance; private set => _instance = value; }
 
@@ -71,8 +73,14 @@ public class UiManager : MonoBehaviour
         _levelsPanel.ChooseLevel(levelIndex);
     }*/
 
+    public void UpdateScore(int newScore)
+    {
+        _gamePanel.UpdateScore(newScore);
+    }
+
     public void ShowDice()
     {
+        _gamePanel.EnablePauseButton(false);
         _dice.gameObject.SetActive(true);
     }
 
@@ -85,6 +93,12 @@ public class UiManager : MonoBehaviour
     {
         //TODO : Show card screen
         //TODO : Only call the callback after card screen animation stoped
+        _gamePanel.EnablePauseButton(true);
         callback();
+    }
+
+    public void LootEarned(int coins, UnityAction callback)
+    {
+        _uIEffectsPanel.OnLootEarned(coins, callback);
     }
 }

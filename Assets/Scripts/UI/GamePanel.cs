@@ -8,6 +8,9 @@ public class GamePanel : MonoBehaviour
     Button _pauseButton;
 
     [SerializeField]
+    Button _skipTurn;
+
+    [SerializeField]
     TextMeshProUGUI _pointsText;
 
     [SerializeField]
@@ -16,6 +19,7 @@ public class GamePanel : MonoBehaviour
     private void Awake()
     {
         _pauseButton.onClick.AddListener(PauseButtonClicked);
+        _skipTurn.onClick.AddListener(SkipTurnButtonClicked);
     }
 
     private void PauseButtonClicked()
@@ -23,7 +27,7 @@ public class GamePanel : MonoBehaviour
         UiManager.Instance.PauseGame(true);
     }
 
-    public void UpdatePoints(int points)
+    public void UpdateScore(int points)
     {
         string newText = "";
         if (points >= 1000)
@@ -49,5 +53,15 @@ public class GamePanel : MonoBehaviour
     public void UpdateRemainingMoves(int moves)
     {
         _remainingMoves.text = moves.ToString();
+    }
+
+    private void SkipTurnButtonClicked()
+    {
+        GameManager.Instance.EndTurn();
+    }
+
+    public void EnablePauseButton(bool value)
+    {
+        _skipTurn.interactable = value;
     }
 }

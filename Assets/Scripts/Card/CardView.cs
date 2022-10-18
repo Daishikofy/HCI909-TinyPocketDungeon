@@ -53,7 +53,7 @@ public class CardView
             Deselect();
         }
     }
-    private async void Select()
+    private void Select()
     {
         if (isSelected == true) return;
 
@@ -77,7 +77,7 @@ public class CardView
         isSelected = true;
         controller.OnSelected(true);
     }
-    public async void Deselect()
+    public void Deselect()
     {
         if (isSelected == false) return;
 

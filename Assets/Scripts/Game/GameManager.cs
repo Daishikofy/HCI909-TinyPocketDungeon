@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
 
     private GameState _gameState;
     public GameState gameState { get => _gameState; private set => _gameState = value; }
+    public Player player { get => _player; private set => _player = value; }
 
     private void Awake()
     {
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
     {
         Card[] cards = _deck.DrawCards(3);
         _hand.SetupInitialHand(cards);
+        _hand.EnableHand(true);
 
         gameState.ResetRemaningActions();
         //TODO: Offer player to redraw
@@ -77,7 +79,7 @@ public class GameManager : MonoBehaviour
         _hand.EnableHand(true);
 
         gameState.canAttack = true;
-        while (gameState.canAttack)
+        if (gameState.canAttack)
         {
             AttackEnnemies(1);
         }
@@ -88,7 +90,7 @@ public class GameManager : MonoBehaviour
         }
         else
         {
-            OnTurnEnded();
+            EndTurn();
         }
     }
 
@@ -96,10 +98,10 @@ public class GameManager : MonoBehaviour
     {
         gameState.selectedCard = card;
         //IF MAGIC CARD
-        ////ENABLE PLAYER
-        //IF ROOM CARD
-        _board.EnableCellsAroundCell(_gameState.currentCellId);
-        //Must highlight the correct cells acording to the type of the card
+        if (card.cardData.cardMagic == ECardMagic.PlayerMovement)
+            _board.EnableCellsAroundCell(_gameState.currentCellId);
+        else
+            _board.EnableCell(_gameState.currentCellId);
     }
 
     public void OnCardDeselected()
@@ -107,25 +109,26 @@ public class GameManager : MonoBehaviour
         _board.DisableCells();
     }
 
-    public void OnCellSelected(int id)
+    public void OnCellSelected(int cellId)
     {
         _board.DisableCells();
 
         _hand.RemoveCard(_gameState.selectedCard.cardId);
         _hand.EnableHand(false);
 
-        _board.PlaceRoom(gameState.currentCellId, id, gameState.selectedCard);
-        //Must play the selected card
-        //If room card
-        //--> Give card to selected cell
-        //--> Move player to cell
-        //--> Remaining cards that can be played in this turn -= 1
-        //If item card
-        //--> ItemCard.boost
+        if (cellId != gameState.currentCellId)
+            _board.PlaceRoom(gameState.currentCellId, cellId);
+        else
+            UseMagic();
         
         gameState.selectedCard = null;
     }
 
+    private void UseMagic()
+    {
+        levelData.cardsData.cardMagics[(int)gameState.selectedCard.cardData.cardMagic]();
+        TryToEndTurn();
+    }
     public void AddPlayerMovement(int cellId)
     {
         gameState.AddCellToPlayerMovement(cellId);
@@ -149,23 +152,37 @@ public class GameManager : MonoBehaviour
 
         gameState.remainingActions -= 1;
 
-        while (gameState.canAttack)
+        if(gameState.canAttack)
         {
             AttackEnnemies(1);
         }
-        Debug.Log("Empty hand: " + _hand.IsEmpty());
 
-        if (_hand.IsEmpty())
+        TryToEndTurn();
+    }
+
+    public void OnEnnemyDefeated()
+    {
+        if (gameState.canAttack)
         {
-            OnTurnEnded();
+            AttackEnnemies(1);
         }
+
+        TryToEndTurn();
+    }
+
+    private void TryToEndTurn()
+    {
         if (gameState.remainingActions <= 0)
         {
-            OnTurnEnded();
+            EndTurn();
+        }
+        else if (_hand.IsEmpty())
+        {
+            EndTurn();
         }
         else
         {
-            _hand.EnableHand(true);  
+            _hand.EnableHand(true);
         }
     }
 
@@ -173,6 +190,8 @@ public class GameManager : MonoBehaviour
     {
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked && gameState.remainingActions > 0)
         {
+            _player.Attack();
+
             _board.AttackCell(gameState.currentCellId, _player.attackPower);
             gameState.remainingActions -= actionCost;
 
@@ -186,15 +205,26 @@ public class GameManager : MonoBehaviour
             gameState.canAttack = false;
         }
     }
+
+    public void GetLoot(List<Card> cards, int money)
+    {
+        foreach(var card in cards)
+        {
+            _hand.AddCard(card);
+        }
+        gameState.currentMoney += money;
+    }
     
     public void OnPlayerMoved()
     {
         //ExecuteTurnAction();
     }
 
-    public void OnTurnEnded()
+    public void EndTurn()
     {
         _board.MoveBoard();
+        gameState.DecreaseMagicsTimer();
+
         if(_player.transform.position.y <= levelData.gameOverHeight)
         {
             GameOver();

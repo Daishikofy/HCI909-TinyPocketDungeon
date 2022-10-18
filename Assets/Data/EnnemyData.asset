@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f8f82c05f309e8469cd82ef7bd513e9, type: 3}
   m_Name: EnnemyData
   m_EditorClassIdentifier: 
-  loot: []
-  maxLifePoints: 2
-  sprite: {fileID: 21300000, guid: 1336bf3adfbbad1419eb0e334397b1a2, type: 3}
+  loot: fbffffff
+  maxLifePoints: 1
+  sprite: {fileID: 21300000, guid: d99462883de5e4448b9a449f75e3a6f5, type: 3}

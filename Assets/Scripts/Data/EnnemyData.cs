@@ -5,7 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnnemyData", menuName = "GameData/EnnemyData")]
 public class EnnemyData : ScriptableObject
 {
-    public Card[] loot;
+    public int[] loot;
     public int maxLifePoints = 1;
     public Sprite sprite;
 }

@@ -16,7 +16,7 @@ public class Board : MonoBehaviour
         _boardCells = new Dictionary<int, BoardCell>();
         _enabledCells = new List<int>();
 
-        Sprite cellSprite = boardData.boardCellData.cellSprites.center;
+        Sprite cellSprite = boardData.boardCellData.cellSprites.empty;
 
         GameObject cellContainer = new GameObject("CellContainer");
         cellContainer.transform.SetParent(this.transform);
@@ -50,7 +50,7 @@ public class Board : MonoBehaviour
 
                 //Instantiate cell
                 BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
-                newCell.SetupBoardCell(this, cellId, currentPosition, false, ennemyData, ennemyPrefab);
+                newCell.SetupBoardCell(this, cellId, currentPosition, boardData.boardCellData, false, ennemyData, ennemyPrefab);
 
                 _boardCells.Add(cellId, newCell);
             }
@@ -64,7 +64,7 @@ public class Board : MonoBehaviour
 
             //Instantiate last row of cells
             BoardCell newCell = Instantiate(boardData.boardCellPrefab, cellContainer.transform);
-            newCell.SetupBoardCell(this, cellId, currentPosition, true, null, null);
+            newCell.SetupBoardCell(this, cellId, currentPosition, boardData.boardCellData, true, null, null);
 
             _boardCells.Add(cellId, newCell);
         }
@@ -72,6 +72,7 @@ public class Board : MonoBehaviour
         //TODO: This is very much POG
         _boardCells[0].SetCellRoom();
     }
+
 
     public Vector2 GetCellPosition(int cellId)
     {
@@ -92,6 +93,12 @@ public class Board : MonoBehaviour
     {
         _boardCells[cellId].AttackCell(damages);
     }
+    public void EnableCell(int currentCellId)
+    {
+        _enabledCells.Clear();
+        _boardCells[currentCellId].EnableCell(true);
+        _enabledCells.Add(currentCellId);
+    }
 
     public void EnableCellsAroundCell(int cellId)
     {
@@ -103,7 +110,7 @@ public class Board : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            if (neigboursId[i] >= 0 && _boardCells[neigboursId[i]].IsEmpty())
+            if (neigboursId[i] >= 0 && _boardCells[neigboursId[i]].IsWalkable())
             {
                 _boardCells[neigboursId[i]].EnableCell(true);
                 _enabledCells.Add(neigboursId[i]);
@@ -139,10 +146,10 @@ public class Board : MonoBehaviour
     }
 
     //Place a card on the board
-    public void PlaceRoom(int currentCellId, int newCellId, Card card)
+    public void PlaceRoom(int currentCellId, int newCellId)
     {
         GameManager.Instance.AddPlayerMovement(newCellId);
-        _boardCells[newCellId].PlaceRoom(card.cardData);
+        _boardCells[newCellId].PlaceRoom();
     }
 
     public void OnRoomPlaced()
@@ -159,7 +166,7 @@ public class Board : MonoBehaviour
     public void MoveBoard()
     {
         Vector2 newPosition = transform.position;
-        newPosition.y -= GameManager.Instance.gameState.boardMovingVelocity * _boardData.boardCellData.cellSprites.center.bounds.size.y;
+        newPosition.y -= GameManager.Instance.gameState.boardMovingVelocity * _boardData.boardCellData.cellSprites.empty.bounds.size.y;
         transform.position = newPosition;
     }
 

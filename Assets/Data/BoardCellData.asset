@@ -13,12 +13,5 @@ MonoBehaviour:
   m_Name: BoardCellData
   m_EditorClassIdentifier: 
   cellSprites:
-    center: {fileID: 21300000, guid: f5271d80fb3ed49408c58fd9ac9f8b07, type: 3}
-    left: {fileID: 0}
-    right: {fileID: 0}
-    top: {fileID: 0}
-    topLeft: {fileID: 0}
-    topRight: {fileID: 0}
-    bottom: {fileID: 0}
-    bottomLeft: {fileID: 0}
-    bottomRight: {fileID: 0}
+    empty: {fileID: 21300000, guid: 0c882179bb3eada4d87e35ce7b45f946, type: 3}
+    occupied: {fileID: 21300000, guid: b6811a4d9b46359429a2bb7f830fb176, type: 3}
