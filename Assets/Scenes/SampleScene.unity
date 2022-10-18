@@ -3358,6 +3358,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 42.467
       objectReference: {fileID: 0}
+    - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+      propertyPath: m_Animations.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+      propertyPath: m_Animations.Array.data[1]
+      value: 
+      objectReference: {fileID: 7400000, guid: 70955e184715f124583f51f0dfa975eb, type: 2}
     - target: {fileID: 2011430874287309248, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
       propertyPath: m_Name
       value: Dice
@@ -3566,7 +3574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 131}
   m_SizeDelta: {x: 100, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1665517330
