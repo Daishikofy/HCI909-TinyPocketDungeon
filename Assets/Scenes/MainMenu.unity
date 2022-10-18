@@ -373,7 +373,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _levelSelectionPrefab: {fileID: 975421558699198006, guid: f54591e576d39e847b8813b2ff04503b, type: 3}
   _levelSelectionParents: {fileID: 1275414163}
-  spacing: 2
+  horizontalSpacing: 1.5
+  verticalSpacing: 2
 --- !u!4 &766101271
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +383,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 766101269}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 2.51, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -735,7 +736,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1275414162}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.99, y: 0, z: 0}
+  m_LocalPosition: {x: -1.47, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

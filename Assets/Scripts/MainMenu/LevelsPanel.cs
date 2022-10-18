@@ -8,7 +8,11 @@ public class LevelsPanel : MonoBehaviour
     [SerializeField]
     private Transform _levelSelectionParents;
 
-    public int spacing;
+    [SerializeField]
+    private float horizontalSpacing = 1.5f;
+    [SerializeField]
+    private float verticalSpacing = 2.0f;
+
 
     private void Start()
     {
@@ -18,10 +22,16 @@ public class LevelsPanel : MonoBehaviour
     private void InstanciateMenu()
     {
         var levels = GlobalGameState.Instance.config.levels;
+        float verticalOffset = verticalSpacing;
 
         for (int i = 0; i < levels.Length; i++)
         {
-            var position = new Vector3(i * spacing, 0, 0) +_levelSelectionParents.position;
+            if (i % 3 == 0)
+            {
+                verticalOffset -= verticalSpacing;
+            }
+
+            var position = new Vector3((i%3) * horizontalSpacing, verticalOffset, 0.0f) +_levelSelectionParents.position;
             LevelSelectionButton button = Instantiate(_levelSelectionPrefab, position, Quaternion.identity, _levelSelectionParents);
             button.Setup(levels[i].levelName, levels[i].thumbnail, i, OnLevelSelected);
         }
