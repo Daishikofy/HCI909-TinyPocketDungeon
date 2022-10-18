@@ -14,13 +14,13 @@ public class Card : DragAndDropElement
     [SerializeField]
     TextMeshPro textMesh;
 
-    private CardView view;
+    private CardView _view;
 
     public void Setup(CardData cardData)
     {
         this.cardData = cardData;
 
-        view = new CardView(this, spriteRenderer, textMesh);
+        _view = new CardView(this, spriteRenderer, textMesh);
         onSelected = new UnityEvent<int>();
     }
 
@@ -39,21 +39,26 @@ public class Card : DragAndDropElement
 
     public void Deselect()
     {
-        view.Deselect();
+        _view.Deselect();
     }
 
     private void OnMouseEnter()
     {
-        view.OnMouseEnter();
+        _view.OnMouseEnter();
     }
 
     private void OnMouseDown()
     {
-        view.OnMouseDown();
+        _view.OnMouseDown();
     }
 
     private void OnMouseExit()
     {
-        view.OnMouseExit();
+        _view.OnMouseExit();
+    }
+
+    public void Enable(bool value)
+    {
+        _view.EnableColliders(value);
     }
 }

@@ -60,10 +60,7 @@ public class CardView
         if (isSelected == true) return;
 
         //disable colliders during animation
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = false;
-        }
+        EnableColliders(false);
 
         //animate card movement up
         controller.StartCoroutine(SelectCoroutine());
@@ -73,10 +70,7 @@ public class CardView
         if (isSelected == false) return;
 
         //disable colliders during animation
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = false;
-        }
+        EnableColliders(false);
 
         //animate card movement down
         controller.StartCoroutine(DeselectCoroutine());
@@ -103,10 +97,7 @@ public class CardView
         }
 
         //enable colliders again
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = true;
-        }
+        EnableColliders(true);
 
         //set card as selected
         isSelected = true;
@@ -134,13 +125,18 @@ public class CardView
         }
 
         //enable colliders again
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = true;
-        }
+        EnableColliders(true);
 
         //set card as deselected
         isSelected = false;
         controller.OnSelected(false);
+    }
+
+    public void EnableColliders(bool value)
+    {
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = value;
+        }
     }
 }

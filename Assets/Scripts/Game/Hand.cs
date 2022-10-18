@@ -134,7 +134,8 @@ public class Hand : MonoBehaviour
     {
         foreach (var card in cards)
         {
-            //TODO: card.enable(value);
+            if(card != null)
+                card.Enable(value);
         }
 
         if (isEnabled == value) return;
