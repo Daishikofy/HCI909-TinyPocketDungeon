@@ -5,6 +5,7 @@ public class EnnemyModel
     private int _currentLifePoints;
 
     public UnityEvent onDefeated;
+    public UnityEvent onAttacked;
 
     #region GETTERS/SETTERS
     public EnnemyData data { get => _data; private set => _data = value; }
@@ -19,6 +20,10 @@ public class EnnemyModel
             { 
                 onDefeated.Invoke(); 
             } 
+            else
+            {
+                onAttacked.Invoke();
+            }
         } 
     }
     #endregion
@@ -29,5 +34,6 @@ public class EnnemyModel
         _currentLifePoints = _data.maxLifePoints;
 
         onDefeated = new UnityEvent();
+        onAttacked = new UnityEvent();
     }
 }

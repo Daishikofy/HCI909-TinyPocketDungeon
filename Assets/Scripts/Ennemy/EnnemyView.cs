@@ -40,9 +40,8 @@ public class EnnemyView
 
     public void OnDefeated()
     {
+        //An animation event will trigger _controller.GetLoot() once the animation ends
         _animator.SetTrigger("Defeated");
-        //TODO : Death animation
         //TODO : Death sound effects
-        _controller.GetLoot();
     }
 }
