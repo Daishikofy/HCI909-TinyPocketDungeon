@@ -15,6 +15,7 @@ public class CardView
     private Color highlightColor = new Color(0.5f, 0.5f, 0.5f);
 
     private AudioSource audioSource;
+    private Collider2D[] colliders;
 
     private bool isSelected = false;
     public CardView(Card controller, SpriteRenderer spriteRenderer, TextMeshPro textMesh)
@@ -28,6 +29,7 @@ public class CardView
         defaultColor = cardRenderer.color;
 
         audioSource = controller.GetComponent<AudioSource>();
+        colliders = controller.GetComponents<Collider2D>();
 
         cardText.text = controller.cardData.cardName;
     }
@@ -58,7 +60,6 @@ public class CardView
         if (isSelected == true) return;
 
         //disable colliders during animation
-        Collider2D[] colliders = controller.GetComponents<Collider2D>();
         foreach (Collider2D col in colliders)
         {
             col.enabled = false;
@@ -66,23 +67,12 @@ public class CardView
 
         //animate card movement up
         controller.StartCoroutine(SelectCoroutine());
-
-        //enable colliders again
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = true;
-        }
-
-        //set card as selected
-        isSelected = true;
-        controller.OnSelected(true);
     }
     public void Deselect()
     {
         if (isSelected == false) return;
 
         //disable colliders during animation
-        Collider2D[] colliders = controller.GetComponents<Collider2D>();
         foreach (Collider2D col in colliders)
         {
             col.enabled = false;
@@ -90,16 +80,6 @@ public class CardView
 
         //animate card movement down
         controller.StartCoroutine(DeselectCoroutine());
-
-        //enable colliders again
-        foreach (Collider2D col in colliders)
-        {
-            col.enabled = true;
-        }
-
-        //set card as deselected
-        isSelected = false;
-        controller.OnSelected(false);
     }
 
     IEnumerator SelectCoroutine()
@@ -114,17 +94,23 @@ public class CardView
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(controller.cardData.selectSound, 0.7F);
 
+        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 50.0f;
         //lerp between start and final position
-        while (Mathf.Abs(targetPosition.y - controller.transform.position.y) > 0.1f)
+        while (Vector2.Distance(controller.transform.position, targetPosition) > step.magnitude)
         {
-            controller.transform.position = Vector2.Lerp(controller.transform.position, targetPosition, velocity);
-            if (velocity < maxVelocity)
-                velocity += 0.001f; //smooth anim
-
+            controller.transform.position += step;
             yield return null; //keep going until while loop is finished
         }
 
-        yield return new WaitForSeconds(1);
+        //enable colliders again
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = true;
+        }
+
+        //set card as selected
+        isSelected = true;
+        controller.OnSelected(true);
     }
 
     private IEnumerator DeselectCoroutine()
@@ -139,15 +125,22 @@ public class CardView
         audioSource.pitch = 1.5f;
         audioSource.PlayOneShot(controller.cardData.deselectSound, 0.7F);
 
+        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 50.0f;
         //lerp between start and final position
-        while (Mathf.Abs(targetPosition.y - controller.transform.position.y) > 0.1f)
+        while (Vector2.Distance(controller.transform.position, targetPosition) > step.magnitude)
         {
-            controller.transform.position = Vector2.Lerp(controller.transform.position, targetPosition, velocity);
-            if (velocity < maxVelocity)
-                velocity += 0.001f; //smooth anim
-
+            controller.transform.position += step;
             yield return null; //keep going until while loop is finished
         }
-        yield return new WaitForSeconds(1);
+
+        //enable colliders again
+        foreach (Collider2D col in colliders)
+        {
+            col.enabled = true;
+        }
+
+        //set card as deselected
+        isSelected = false;
+        controller.OnSelected(false);
     }
 }

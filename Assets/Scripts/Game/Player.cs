@@ -29,7 +29,7 @@ public class Player : MonoBehaviour
 
     private IEnumerator MovePlayerCorroutine(Vector2 targetPosition)
     {
-        Vector3 step = (targetPosition - (Vector2)transform.position) / 100.0f;
+        Vector3 step = (targetPosition - (Vector2)transform.position) / 50.0f;
         while (Vector2.Distance(transform.position, targetPosition) > step.magnitude)
         {
             transform.position += step;
