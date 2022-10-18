@@ -54,7 +54,7 @@ public class BoardCell : MonoBehaviour
 
     public bool IsWalkable()
     {
-        return model.cellState == ECellStates.Empty || model.cellState == ECellStates.Blocked;
+        return model.cellState == ECellStates.Empty || model.cellState == ECellStates.Blocked || model.cellState == ECellStates.FinalLine;
     }
 
 
@@ -63,11 +63,13 @@ public class BoardCell : MonoBehaviour
         if(model.cellState == ECellStates.Blocked)
         {
             //ROOM HAS ENNEMY
+            //Could trigger a special vfx or sfx here
         }
         else
         {
             model.cellState = ECellStates.Room;
         }
+
         view.OnPlaceRoom();
     }
 
