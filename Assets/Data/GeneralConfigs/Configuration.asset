@@ -13,10 +13,6 @@ MonoBehaviour:
   m_Name: Configuration
   m_EditorClassIdentifier: 
   levels:
+  - {fileID: 11400000, guid: ff08d220cbc6b684199db38749cc6803, type: 2}
   - {fileID: 11400000, guid: 615e527dfb563f54c917af4a9d26e19d, type: 2}
-  - {fileID: 11400000, guid: 615e527dfb563f54c917af4a9d26e19d, type: 2}
-  cards:
-  - {fileID: 11400000, guid: 54562e2f2e98b1d478880d02231ac646, type: 2}
-  - {fileID: 11400000, guid: 388d979ec264e254cad21cefe74dc971, type: 2}
-  - {fileID: 11400000, guid: a761e6948ccf8b14f8081e13aaa10614, type: 2}
-  - {fileID: 11400000, guid: acb04d8c6cc095a448375bcf20915814, type: 2}
+  cardsData: {fileID: 11400000, guid: c8bf194a35ad11f48865ba40feff5528, type: 2}

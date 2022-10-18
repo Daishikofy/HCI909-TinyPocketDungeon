@@ -10,18 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71180e17eb50e284fb46f9f2d39e5cc9, type: 3}
-  m_Name: LevelData
+  m_Name: FirstSteps
   m_EditorClassIdentifier: 
-  levelName: Test Level
-  thumbnail: {fileID: 21300000, guid: feb2afdc76a251d45b348d413208dd16, type: 3}
-  boardData: {fileID: 11400000, guid: 35ad6d3443c370c47827e628c1a791fd, type: 2}
+  levelName: First Steps
+  thumbnail: {fileID: 21300000, guid: 1820fd9249f4b284dba4f6f869455f8f, type: 3}
+  boardData: {fileID: 11400000, guid: c445c66610dcf4349ab6fcf3e0a253ca, type: 2}
   gameOverHeight: -3.44
   ennemyPrefab: {fileID: 6120581732429154075, guid: 2537c493e20ebfb4cbfe9d8d4cb4f205, type: 3}
   ennemies:
-  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
-  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
-  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
-  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
-  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
   - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
   cardPrefab: {fileID: 5285968705351622497, guid: d9c475cc63a165d4bb722abedf306f86, type: 3}

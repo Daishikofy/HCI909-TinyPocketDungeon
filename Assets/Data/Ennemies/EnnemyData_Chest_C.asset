@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4f8f82c05f309e8469cd82ef7bd513e9, type: 3}
-  m_Name: EnnemyData
+  m_Name: EnnemyData_Chest_C
   m_EditorClassIdentifier: 
-  loot: fbffffff
+  loot: fbffffff00000000
   maxLifePoints: 1
-  sprite: {fileID: 21300000, guid: d99462883de5e4448b9a449f75e3a6f5, type: 3}
+  sprite: {fileID: 21300000, guid: 6f273707f6594b1459e5d4d9f3cf52e7, type: 3}

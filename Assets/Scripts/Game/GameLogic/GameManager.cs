@@ -134,7 +134,7 @@ public class GameManager : MonoBehaviour
 
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
         {
-            UiManager.Instance.ShowVictory(gameState.currentScore);
+            Victory();
             return;
         }
 
@@ -228,6 +228,12 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         UiManager.Instance.ShowGameOver();
+    }
+
+    private void Victory()
+    {
+        gameState.Save();
+        UiManager.Instance.ShowVictory(gameState.currentScore);
     }
 
 }
