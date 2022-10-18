@@ -514,7 +514,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6120581732429154074}
   - component: {fileID: 6120581732429154075}
-  - component: {fileID: 264388267117091869}
+  - component: {fileID: 9126396053259741791}
   m_Layer: 0
   m_Name: Ennemy
   m_TagString: Untagged
@@ -562,7 +562,7 @@ MonoBehaviour:
   - {fileID: 8652247000853410224}
   - {fileID: 6380282946416577310}
   - {fileID: 2280259766835737026}
---- !u!95 &264388267117091869
+--- !u!95 &9126396053259741791
 Animator:
   serializedVersion: 4
   m_ObjectHideFlags: 0

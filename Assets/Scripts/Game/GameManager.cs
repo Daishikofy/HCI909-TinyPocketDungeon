@@ -78,29 +78,16 @@ public class GameManager : MonoBehaviour
 
         _hand.EnableHand(true);
 
-        gameState.canAttack = true;
-        if (gameState.canAttack)
-        {
-            AttackEnnemies(1);
-        }
-
-        if (gameState.remainingActions > 0)
-        {
-            _hand.EnableHand(true);
-        }
-        else
-        {
-            EndTurn();
-        }
+        TryToAttackEnnemies(1);      
     }
 
     public void OnCardSelected(Card card)
     {
         gameState.selectedCard = card;
-        //IF MAGIC CARD
+        //If mouvement card
         if (card.cardData.cardMagic == ECardMagic.PlayerMovement)
             _board.EnableCellsAroundCell(_gameState.currentCellId);
-        else
+        else //If magic card
             _board.EnableCell(_gameState.currentCellId);
     }
 
@@ -140,55 +127,48 @@ public class GameManager : MonoBehaviour
 
         _board.SetCellVisisted(gameState.currentCellId);
         gameState.currentCellId = newCell;
-        _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
+        
 
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
         {
             UiManager.Instance.ShowVictory();
         }
 
-        gameState.canAttack = true;
-        AttackEnnemies(0);
-
-        gameState.remainingActions -= 1;
-
-        if(gameState.canAttack)
-        {
-            AttackEnnemies(1);
-        }
-
-        TryToEndTurn();
+        _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
     }
 
     public void OnEnnemyAttacked()
     {
         if (gameState.canAttack)
         {
-            AttackEnnemies(1);
+            TryToAttackEnnemies(1);
         }
 
         TryToEndTurn();
     }
 
-    private void TryToEndTurn()
+    private bool TryToEndTurn()
     {
         if (gameState.remainingActions <= 0)
         {
             EndTurn();
+            return true;
         }
         else if (_hand.IsEmpty())
         {
             EndTurn();
+            return true;
         }
         else
         {
             _hand.EnableHand(true);
+            return false;
         }
     }
 
-    private void AttackEnnemies(int actionCost)
+    private bool TryToAttackEnnemies(int actionCost)
     {
-        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked && gameState.remainingActions > 0)
+        if (_board.GetCellState(gameState.currentCellId) == ECellStates.Blocked && (actionCost == 0 || gameState.remainingActions > 0))
         {
             _player.Attack();
 
@@ -199,10 +179,12 @@ public class GameManager : MonoBehaviour
             {
                 gameState.canAttack = false;
             }
+            return true;
         }
         else
         {
             gameState.canAttack = false;
+            return false;
         }
     }
 
@@ -217,7 +199,11 @@ public class GameManager : MonoBehaviour
     
     public void OnPlayerMoved()
     {
-        //ExecuteTurnAction();
+        gameState.remainingActions -= 1;
+        if (!TryToAttackEnnemies(0))
+        {
+            TryToEndTurn();
+        }
     }
 
     public void EndTurn()
