@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Events;
 
 public class Dice : MonoBehaviour
 {
     [SerializeField]
-    Animation rollDiceAnimation;
+    Animation _diceAnimation;
 
     private UnityAction _onDiceRolled;
 
@@ -18,11 +15,17 @@ public class Dice : MonoBehaviour
     public void ShowDice()
     {
         gameObject.SetActive(true);
+        
+    }
+
+    private void OnEnable()
+    {
+        _diceAnimation.Play("Dice_Show");
     }
 
     private void RollDice()
     {
-        rollDiceAnimation.Play();
+        _diceAnimation.Play("Dice_Roll");
     }
 
     private void OnMouseDown()
