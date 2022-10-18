@@ -6,5 +6,5 @@ using UnityEngine;
 public class GlobalGameData : ScriptableObject
 {
     public LevelData[] levels;
-    public Card[] cards;
+    public CardData[] cards;
 }

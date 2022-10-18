@@ -14,7 +14,7 @@ public class Deck : MonoBehaviour
         if(deckData == null)
         {
             //Use default deck
-            int[] ids = { 0, 0, 0, 1, 1, 2, 2, 3, 3, 4};
+            int[] ids = { 0, 0, 0, 0, 0, 0, 0, 1, 2, 3};
             deckData = new DeckData(ids);
         }
     }
