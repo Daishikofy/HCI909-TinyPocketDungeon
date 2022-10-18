@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using UnityEngine;
 
 public class GameState 
 {
@@ -75,5 +76,11 @@ public class GameState
             return _playerMovementQueue.Dequeue();
         else
             return -1;
+    }
+
+    public void Save()
+    {
+        int previousScore = PlayerPrefs.GetInt("Score");
+        PlayerPrefs.SetInt("Score", previousScore + currentScore);
     }
 }
