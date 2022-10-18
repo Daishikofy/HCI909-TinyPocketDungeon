@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2316df34a1cdd694cb8295ff4cac1c33, type: 3}
-  m_Name: BoardData
+  m_Name: Board_3x5
   m_EditorClassIdentifier: 
-  width: 4
-  height: 10
+  width: 3
+  height: 5
   boardCellPrefab: {fileID: -5159677928689998217, guid: c29bb74408a0e3943804b789b1124e75, type: 3}
   boardCellData: {fileID: 11400000, guid: b026527a794339f4bb5d4b0b1153529a, type: 2}

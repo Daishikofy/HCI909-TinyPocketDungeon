@@ -30,6 +30,9 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
 
+        if (GlobalGameManager.Instance != null)
+            levelData = GlobalGameManager.Instance.currentLevel;
+
         gameState = new GameState();
 
         _hand = FindObjectOfType<Hand>();

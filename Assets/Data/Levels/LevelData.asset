@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelName: Test Level
   thumbnail: {fileID: 21300000, guid: feb2afdc76a251d45b348d413208dd16, type: 3}
-  boardData: {fileID: 11400000, guid: e22dea6a734501f40bb2faf45a34db86, type: 2}
+  boardData: {fileID: 11400000, guid: c445c66610dcf4349ab6fcf3e0a253ca, type: 2}
   gameOverHeight: -3.44
   ennemyPrefab: {fileID: 6120581732429154075, guid: 2537c493e20ebfb4cbfe9d8d4cb4f205, type: 3}
   ennemies:
