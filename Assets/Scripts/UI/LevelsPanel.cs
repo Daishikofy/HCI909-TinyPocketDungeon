@@ -11,10 +11,11 @@ public class LevelsPanel : MonoBehaviour
 
     private void Awake()
     {
-        foreach (Button levelButton in _levelsButtons)
-        {
-            levelButton.onClick.AddListener(delegate { LevelButtonClicked(2); });
 
+        for (int i = 0; i < _levelsButtons.Length; i++)
+        {
+            int x = i;
+            _levelsButtons[i].onClick.AddListener(delegate { LevelButtonClicked(x); });
         }
     }
 
@@ -26,6 +27,7 @@ public class LevelsPanel : MonoBehaviour
     private void LevelButtonClicked(int level)
     {
         //UiManager.Instance.PlayLevel(true);
+        Debug.Log(level);
     }
 
     public void ChooseLevel(int levelIndex)

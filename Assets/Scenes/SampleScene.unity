@@ -3213,6 +3213,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b62b1fd020c5eec418b2f8c8b7fc69ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!111 &1525870158 stripped
+Animation:
+  m_CorrespondingSourceObject: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+  m_PrefabInstance: {fileID: 1617232115}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1529598274
 GameObject:
   m_ObjectHideFlags: 0
@@ -3358,14 +3363,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 42.467
       objectReference: {fileID: 0}
+    - target: {fileID: 1198477663205219196, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+      propertyPath: _diceAnimation
+      value: 
+      objectReference: {fileID: 1525870158}
+    - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+      propertyPath: m_Animation
+      value: 
+      objectReference: {fileID: 7400000, guid: 20c6d8daab56e5c49b85e838b39f6376, type: 2}
     - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
       propertyPath: m_Animations.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
       propertyPath: m_Animations.Array.data[1]
       value: 
       objectReference: {fileID: 7400000, guid: 70955e184715f124583f51f0dfa975eb, type: 2}
+    - target: {fileID: 1198477663205219197, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
+      propertyPath: m_Animations.Array.data[2]
+      value: 
+      objectReference: {fileID: 7400000, guid: 20c6d8daab56e5c49b85e838b39f6376, type: 2}
     - target: {fileID: 2011430874287309248, guid: a89630eecee009c4bb7617e783dbf700, type: 3}
       propertyPath: m_Name
       value: Dice
