@@ -14,6 +14,4 @@ public class LevelData : ScriptableObject
     public EnnemyData[] ennemies;
 
     public Card cardPrefab;
-    //TODO : Remove and use global config instead
-    public AllCardsData cardsData;
 }

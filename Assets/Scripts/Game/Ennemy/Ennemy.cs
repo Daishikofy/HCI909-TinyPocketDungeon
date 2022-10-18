@@ -43,7 +43,7 @@ public class Ennemy : MonoBehaviour
             if (loot > 0)
             {
                 Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
-                card.Setup(GameManager.Instance.levelData.cardsData.allCardsData[loot]);
+                card.Setup(GlobalGameState.Instance.config.cardsData.cards[loot]);
                 cards.Add(card);
             }
             else

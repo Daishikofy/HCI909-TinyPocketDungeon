@@ -6,7 +6,7 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "CardsData", menuName = "WorldData/CardsData", order = 1)]
 public class AllCardsData : ScriptableObject
 {
-    public CardData[] allCardsData;
+    public CardData[] cards;
     public UnityAction[] cardMagics = { MovePlayer
             , SwordMagic 
             , HourglassMagic

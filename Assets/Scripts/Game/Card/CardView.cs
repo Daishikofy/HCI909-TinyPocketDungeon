@@ -12,7 +12,7 @@ public class CardView
     private TextMeshPro cardText;
 
     private Color defaultColor;
-    private Color highlightColor = Color.red;
+    private Color highlightColor = new Color(0.5f, 0.5f, 0.5f);
 
     private AudioSource audioSource;
 

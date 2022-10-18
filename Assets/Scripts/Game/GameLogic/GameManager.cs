@@ -116,7 +116,7 @@ public class GameManager : MonoBehaviour
 
     private void UseMagic()
     {
-        levelData.cardsData.cardMagics[(int)gameState.selectedCard.cardData.cardMagic]();
+        GlobalGameState.Instance.config.cardsData.cardMagics[(int)gameState.selectedCard.cardData.cardMagic]();
         TryToEndTurn();
     }
     public void AddPlayerMovement(int cellId)

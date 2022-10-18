@@ -7,9 +7,9 @@ public class BoardCellView
     private BoardCell _controller;
     private SpriteRenderer _renderer;
 
-    private Color defaultColor = new Color(0.8f, 0.8f, 0.8f);
-    private Color hilightColor = Color.white;
-    private Color enabledColor = new Color(0.2f, 0.8f, 0.8f);
+    private Color defaultColor = Color.white;
+    private Color hilightColor = new Color(0.5f, 0.5f, 0.5f);
+    private Color enabledColor = new Color(0.8f, 0.8f, 0.8f);
     private Color currentStateColor;
 
     private BoardCellData _cellData;

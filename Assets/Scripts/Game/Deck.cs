@@ -46,7 +46,7 @@ public class Deck : MonoBehaviour
     private void DrawCardLogic()
     {
         int cardId = deckData.deckCardsId[Random.Range(0, deckData.deckCardsId.Length)];
-        _currentCardData = GameManager.Instance.levelData.cardsData.allCardsData[cardId];
+        _currentCardData = GlobalGameState.Instance.config.cardsData.cards[cardId];
     }
 
     private void InstanciateCardAndAddToHand()

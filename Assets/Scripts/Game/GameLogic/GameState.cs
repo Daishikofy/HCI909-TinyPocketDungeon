@@ -54,7 +54,7 @@ public class GameState
                 {
                     //If the timer for the magic of index i gets to 0, call the function
                     //to remove the magic's effect.
-                    GameManager.Instance.levelData.cardsData.disableCardMagic[i]();
+                    GlobalGameState.Instance.config.cardsData.disableCardMagic[i]();
                 }
             }
         }
