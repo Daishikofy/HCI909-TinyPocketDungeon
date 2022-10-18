@@ -6,9 +6,6 @@ public class Dice : MonoBehaviour
     [SerializeField]
     Animation _diceAnimation;
 
-    [SerializeField]
-    Animation showDice;
-
     private UnityAction _onDiceRolled;
 
     public void SetupDice(UnityAction onDiceRolled)
