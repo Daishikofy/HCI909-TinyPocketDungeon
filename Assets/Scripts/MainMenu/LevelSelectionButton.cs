@@ -5,11 +5,13 @@ using TMPro;
 public class LevelSelectionButton : MonoBehaviour
 {
     [SerializeField]
+    private Color highlightColor;
+
+    [SerializeField]
     private TextMeshPro _titleText;
     [SerializeField]
     private SpriteRenderer _thumbnailRenderer;
 
-    
     private UnityEvent<int> _onClick;
 
     private int _id;
@@ -31,5 +33,14 @@ public class LevelSelectionButton : MonoBehaviour
     private void OnMouseDown()
     {
         _onClick.Invoke(_id);
+    }
+    private void OnMouseOver()
+    {
+        _thumbnailRenderer.color = highlightColor;
+    }
+
+    private void OnMouseExit()
+    {
+        _thumbnailRenderer.color = Color.white;
     }
 }

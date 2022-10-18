@@ -21,7 +21,7 @@ public class LevelsPanel : MonoBehaviour
 
         for (int i = 0; i < levels.Length; i++)
         {
-            var position = new Vector3(i * spacing, 0, 0);
+            var position = new Vector3(i * spacing, 0, 0) +_levelSelectionParents.position;
             LevelSelectionButton button = Instantiate(_levelSelectionPrefab, position, Quaternion.identity, _levelSelectionParents);
             button.Setup(levels[i].levelName, levels[i].thumbnail, i, OnLevelSelected);
         }
