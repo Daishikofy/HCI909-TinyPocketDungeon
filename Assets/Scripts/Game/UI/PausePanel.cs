@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 
 public class PausePanel : MonoBehaviour
@@ -23,14 +22,13 @@ public class PausePanel : MonoBehaviour
 
     private void ReplayButtonClicked()
     {
-        Scene scene = SceneManager.GetActiveScene(); 
-        SceneManager.LoadScene(scene.name);
+        //Using unity's scene manager to reload the game at it's original state
+        GlobalGameManager.Instance.LoadLevel(GlobalGameManager.Instance.currentLevel);
     }
 
     private void HomeButtonClicked()
     {
-        /*throw new System.NotImplementedException();*/
-        UiManager.Instance.ShowLevelMenu(true);
+        GlobalGameManager.Instance.LoadMainMenu();
     }
 
     private void PlayButtonClicked()
