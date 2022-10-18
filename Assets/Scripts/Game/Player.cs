@@ -22,9 +22,19 @@ public class Player : MonoBehaviour
     }
     public void MovePlayer(Vector2 newPosition)
     {
-        //TODO: Lerp between old and new position
         newPosition.y -= 0.25f;
-        transform.position = newPosition;
+        //Start corroutine to lerp between old and new position
+        StartCoroutine("MovePlayerCorroutine", newPosition);
+    }
+
+    private IEnumerator MovePlayerCorroutine(Vector2 targetPosition)
+    {
+        Vector3 step = (targetPosition - (Vector2)transform.position) / 100.0f;
+        while (Vector2.Distance(transform.position, targetPosition) > step.magnitude)
+        {
+            transform.position += step;
+            yield return null;
+        }
         GameManager.Instance.OnPlayerMoved();
     }
 }

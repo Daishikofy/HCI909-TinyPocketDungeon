@@ -167,7 +167,17 @@ public class Board : MonoBehaviour
     {
         Vector2 newPosition = transform.position;
         newPosition.y -= GameManager.Instance.gameState.boardMovingVelocity * _boardData.boardCellData.cellSprites.empty.bounds.size.y;
-        transform.position = newPosition;
+        StartCoroutine("MoveBoardCorroutine", newPosition);
+    }
+
+    private IEnumerator MoveBoardCorroutine(Vector2 targetPosition)
+    {
+        Vector3 step = (targetPosition - (Vector2)transform.position) / 100.0f;
+        while (Vector2.Distance(transform.position, targetPosition) > step.magnitude)
+        {
+            transform.position += step;
+            yield return null;
+        }
     }
 
     private Vector2 CellIdToPosition(int id)

@@ -143,13 +143,8 @@ public class GameManager : MonoBehaviour
 
     public void OnEnnemyAttacked()
     {
-        Debug.Log("ENNEMY ATTACKED");
-        if (gameState.canAttack)
-        {
-            TryToAttackEnnemies(1);
-        }
-
-        TryToEndTurn();
+        if(!TryToAttackEnnemies(1))  
+            TryToEndTurn();
     }
 
     private bool TryToEndTurn()
