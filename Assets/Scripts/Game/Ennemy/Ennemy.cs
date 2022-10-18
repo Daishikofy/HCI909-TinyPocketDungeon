@@ -40,7 +40,7 @@ public class Ennemy : MonoBehaviour
         foreach(var loot in _model.data.loot)
         {
             //Negative loot correspond to money while positive loot correspond to card index
-            if (loot > 0)
+            if (loot >= 0)
             {
                 Card card = Instantiate(GameManager.Instance.levelData.cardPrefab);
                 card.Setup(GlobalGameState.Instance.config.cardsData.cards[loot]);
