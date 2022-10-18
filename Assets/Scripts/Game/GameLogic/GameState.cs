@@ -1,11 +1,9 @@
- using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 
 public class GameState 
 {
-    private int _currentMoney = 0;
-    public int currentMoney { get => _currentMoney; set { _currentMoney = value; UiManager.Instance.UpdateScore(_currentMoney); } }
+    private int _currentScore = 0;
+    public int currentScore { get => _currentScore; set { _currentScore = value; UiManager.Instance.UpdateScore(_currentScore); } }
 
     public float boardMovingVelocity = 1f;
     public int currentCellId = 0;

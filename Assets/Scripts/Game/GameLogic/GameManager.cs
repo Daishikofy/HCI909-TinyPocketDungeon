@@ -134,7 +134,8 @@ public class GameManager : MonoBehaviour
 
         if (_board.GetCellState(gameState.currentCellId) == ECellStates.FinalLine)
         {
-            UiManager.Instance.ShowVictory();
+            UiManager.Instance.ShowVictory(gameState.currentScore);
+            return;
         }
 
         _player.MovePlayer(_board.GetCellPosition(gameState.currentCellId));
@@ -197,7 +198,7 @@ public class GameManager : MonoBehaviour
         {
             _hand.AddCard(card);
         }
-        gameState.currentMoney += money;
+        gameState.currentScore += money;
     }
     
     public void OnPlayerMoved()
