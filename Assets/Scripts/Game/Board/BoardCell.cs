@@ -37,7 +37,7 @@ public class BoardCell : MonoBehaviour
         {
             //Instanciate new ennemy
             model.ennemy = Instantiate(ennemyPrefab, _ennemySpawnPoint);
-            model.ennemy.SetupEnnemy(ennemyData, OnEnnemyAttacked);
+            model.ennemy.SetupEnnemy(ennemyData, OnEnnemyDefeated);
             SetCellRoom();
         }
     }
@@ -80,7 +80,8 @@ public class BoardCell : MonoBehaviour
 
     public void SetVisited()
     {
-        model.cellState = ECellStates.Connected;
+        if (model.cellState != ECellStates.Blocked)
+            model.cellState = ECellStates.Connected;
     }
 
     public void EnableCell(bool value)
@@ -100,10 +101,9 @@ public class BoardCell : MonoBehaviour
         return model.cellState;
     }
 
-    private void OnEnnemyAttacked()
+    private void OnEnnemyDefeated()
     {
         model.cellState = ECellStates.Connected;
-        GameManager.Instance.OnEnnemyAttacked();
     }
 
 

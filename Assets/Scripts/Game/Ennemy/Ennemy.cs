@@ -13,12 +13,12 @@ public class Ennemy : MonoBehaviour
     [SerializeField]
     private SpriteRenderer[] _lifePoints;
 
-    private UnityAction _onAttackedCallback;
-    public void SetupEnnemy(EnnemyData data, UnityAction onAttackedCallback)
+    private UnityAction _onDefeatedCallback;
+    public void SetupEnnemy(EnnemyData data, UnityAction onDefeatedCallback)
     {
         _model = new EnnemyModel(data);
 
-        _onAttackedCallback = onAttackedCallback;
+        _onDefeatedCallback = onDefeatedCallback;
 
         _model.onDefeated.AddListener(OnDefeated);
         _model.onAttacked.AddListener(OnAttacked);
@@ -29,6 +29,7 @@ public class Ennemy : MonoBehaviour
     private void OnDefeated()
     {
         _view.OnDefeated();
+        _onDefeatedCallback.Invoke();
     }
 
     //GetLoot() is called by an animation event on the deafeated animation triggered by the view
@@ -53,7 +54,9 @@ public class Ennemy : MonoBehaviour
         }
 
         GameManager.Instance.GetLoot(cards, money);
-        UiManager.Instance.LootEarned(money, _onAttackedCallback);
+        GameManager.Instance.OnEnnemyAttacked();
+
+        UiManager.Instance.LootEarned(money, _onDefeatedCallback);
     }
 
     public void Attacked(int damages)
@@ -64,6 +67,10 @@ public class Ennemy : MonoBehaviour
     private void OnAttacked()
     {
         _view.OnAttacked();
-        _onAttackedCallback.Invoke();
+    }
+
+    public void OnAttackAnimationEnded()
+    {
+        GameManager.Instance.OnEnnemyAttacked();
     }
 }

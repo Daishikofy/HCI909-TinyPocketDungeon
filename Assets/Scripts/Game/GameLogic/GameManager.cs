@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
 
     public void OnEnnemyAttacked()
     {
+        Debug.Log("ENNEMY ATTACKED");
         if (gameState.canAttack)
         {
             TryToAttackEnnemies(1);
