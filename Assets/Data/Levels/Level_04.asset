@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71180e17eb50e284fb46f9f2d39e5cc9, type: 3}
+  m_Name: Level_04
+  m_EditorClassIdentifier: 
+  levelName: I Will Survive
+  thumbnail: {fileID: 21300000, guid: f194dc09db679464db06c319b2ee6831, type: 3}
+  boardData: {fileID: 11400000, guid: c445c66610dcf4349ab6fcf3e0a253ca, type: 2}
+  gameOverHeight: -3.44
+  ennemyPrefab: {fileID: 6120581732429154075, guid: 2537c493e20ebfb4cbfe9d8d4cb4f205, type: 3}
+  ennemies:
+  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
+  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
+  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
+  - {fileID: 11400000, guid: ead523e47086b644c9aac4c7fd8e94cc, type: 2}
+  - {fileID: 11400000, guid: e09c58768a513aa49bfb2cbb3f2ffd95, type: 2}
+  - {fileID: 11400000, guid: e09c58768a513aa49bfb2cbb3f2ffd95, type: 2}
+  - {fileID: 11400000, guid: 88e318f292cddb149b6c316be4643e6c, type: 2}
+  - {fileID: 11400000, guid: 88e318f292cddb149b6c316be4643e6c, type: 2}
+  - {fileID: 11400000, guid: b0cb7aba46ef3504c9f72d433e31e9ac, type: 2}
+  - {fileID: 11400000, guid: b0cb7aba46ef3504c9f72d433e31e9ac, type: 2}
+  cardPrefab: {fileID: 5285968705351622497, guid: d9c475cc63a165d4bb722abedf306f86, type: 3}
