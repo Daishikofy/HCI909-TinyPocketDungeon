@@ -13,12 +13,16 @@ public class Ennemy : MonoBehaviour
     [SerializeField]
     private SpriteRenderer[] _lifePoints;
 
-    private UnityAction onDefeatedCallback;
-    public void SetupEnnemy(EnnemyData data, UnityAction onDefeatedCallback)
+    private UnityAction _onAttackedCallback;
+    public void SetupEnnemy(EnnemyData data, UnityAction onAttackedCallback)
     {
         _model = new EnnemyModel(data);
-        this.onDefeatedCallback = onDefeatedCallback;
+
+        _onAttackedCallback = onAttackedCallback;
+
         _model.onDefeated.AddListener(OnDefeated);
+        _model.onAttacked.AddListener(OnAttacked);
+
         _view = new EnnemyView(this, _model, _pawnThumbnail, _lifePoints);
     }
 
@@ -26,6 +30,8 @@ public class Ennemy : MonoBehaviour
     {
         _view.OnDefeated();
     }
+
+    //GetLoot() is called by an animation event on the deafeated animation triggered by the view
     public void GetLoot()
     {
         List<Card> cards = new List<Card>();
@@ -45,13 +51,19 @@ public class Ennemy : MonoBehaviour
                 money += (loot * -1);
             }
         }
-            GameManager.Instance.GetLoot(cards, money);
-        UiManager.Instance.LootEarned(money, onDefeatedCallback);
+
+        GameManager.Instance.GetLoot(cards, money);
+        UiManager.Instance.LootEarned(money, _onAttackedCallback);
     }
 
-    public void OnAttacked(int damages)
+    public void Attacked(int damages)
+    {
+        //The model will define if the attack results an attack feedback or in a defeated feedback
+        _model.currentLifePoints -= damages;
+    }
+    private void OnAttacked()
     {
         _view.OnAttacked();
-        _model.currentLifePoints -= damages;
+        _onAttackedCallback.Invoke();
     }
 }
