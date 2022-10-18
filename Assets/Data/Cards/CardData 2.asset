@@ -15,3 +15,5 @@ MonoBehaviour:
   cardName: Card 2
   cardMagic: 0
   cardVisual: {fileID: 21300000, guid: 88a9ca3a0a32e334aba91583af4f16d8, type: 3}
+  selectSound: {fileID: 8300000, guid: 21d19ec48cfc07d4f888aac171d67eb1, type: 3}
+  deselectSound: {fileID: 8300000, guid: d4123fdfc05898d46b34728e9d575008, type: 3}
