@@ -18,7 +18,9 @@ If you wish to run the code within the Unity editor you will need to download :
 
 Once this is done you can clone the following repository in the folder of your choice. <https://github.com/Daishikofy/HCI909-TinyPocketDungeon>  
 
-``git clone  git@github.com:Daishikofy/HCI909-TinyPocketDungeon.git``  
+```
+git clone  git@github.com:Daishikofy/HCI909-TinyPocketDungeon.git
+```
 
 Once cloned, you can access the project from unity hub by going in "Projects" and selecting "Add".
 
@@ -54,31 +56,32 @@ Left to right: movement card, sword magic card, pegasus boots card, and hourglas
 
 -   Each turn:
 
-  -   Select a card, and complete the turn to receive a dice to roll.
+    -   Select a card and place the card on a board cell
 
-    -   Complete a turn by selecting a movement card, a magic card, or both.
+        -   Complete a turn by selecting a movement card, a magic card, or both.
 
-    -   A player may choose to move to an empty tile, an enemy occupied tile, or a chest occupied tile.
+        -   A player may choose to move to an empty tile, an enemy occupied tile, or a chest occupied tile.
 
--   Moving to an enemy occupied tile, attacking the enemy, and successfully killing the enemy will give the player a loot reward.
+            -   Moving to an enemy occupied tile, attacking the enemy, and successfully killing the enemy will give the player a loot reward.
 
--   Moving to a chest occupied tile will give the player a loot reward.
+            -   Moving to a chest occupied tile will give the player a loot reward.
+      
+                -   Loot can either be a card or coins
 
--   Alternatively you can choose to skip your turn.
+    -   Alternatively you can choose to skip your turn.
 
 -   After each turn, the player rolls the dice to be randomly given another card from the deck.
 
 -   Gameplay continues until the game is lost or won:
 
--   Win by reaching the end of the cavern.
+    -   Win by reaching the end of the cavern.
 
--   Lose by perishing in the lava.
+    -   Lose by perishing in the lava.
 
 ![](https://lh4.googleusercontent.com/aPMZaIBHrXFGKz3-gL8n9Lt3NX1PIFb9HRJZopHUDHI1J3J-UvO4FKWoOpfx_8-6QvALNf7jZS3IUhmIjj-nzdQnNSin_uBXIuiRZ0G5i05nNf2yn1tzBW-UZYBp2u2ADqsdtMRevNfo6_rteVvEZsJ9V6Hc1-uKeIC5pKRK9LMbKz59B9LuQ78Aug)![](https://lh3.googleusercontent.com/CtuqGc5t0cQlN8DrCe5LHlI98NHGjPNyt7AeWSZJtYZqfh-vnYuexgBi9tIBRbwou2qv5ITLBcXkMtd7Jgzx0j7jq9M04IbgJDOvUk_zIkbAayVRTO_pTNh4NRw7bEjiZs_hfAsujQnr0i9t6UHXBUwMG8VNZD68z_FPhhWc7dlGghsPFS1O5M0ewg)
 
-Left: Player rolls dice for new card. Enemy has                              Right: Player plays to attack enemy.
-
-2/3 health.                                                                                                                               Enemy now has 1/3 health.
+Top: Player rolls dice for new card. Enemy has 2/3 health.
+Right: Player plays to attack enemy. Enemy now has 1/3 health.                                                                                                         
 
 ![](https://lh3.googleusercontent.com/fLWsCl76XjKYVju7VhtxcbjMIzuIAj2VO5bLvO4UXIxIwEsKckslSg9qMk8SDl7QgARNFBIFgG5p-ANhw7XF4TXxdZTVA1jqCvCd4Q5aHO61zr15thi709koiUlCvUHQCMtLF3u4kdp2HqJZY6JPy6N27AlSlD1ULTclUbQGJ8rVfm2LN0iglHQwQw)
 
@@ -149,7 +152,7 @@ We utilized a PAC (Presentation-Architecture-Controller) architecture pattern on
 
 Overview schematic of scripts and their relations
 
-Many PAC agents were layered to create the game. There are two main PAC agents running the game: the main menu/global PAC and each level/game PAC. Each level is run by its own hierarchy of PAC agents (and edge cases). This includes, but is not limited to, a card PAC agent, board cells PAC agent, enemy PAC agent, etc. Each PAC agent works together with the level's game controller, UI manager, and game state to operate the level. Refer to the diagrams below for schematic examples of PAC encapsulation in our game's levels.
+Many PAC agents were layered to create the game. There are two main PAC agents running the game: the main menu/global PAC and each level/game PAC. Each level is run by its own hierarchy of PAC agents (and edge cases). This includes, but is not limited to, a card PAC agent, board cells PAC agent, enemy PAC agent, etc. Each PAC agent works together with the level’s game controller, UI manager, and game state to operate the level. Refer to the diagrams below for schematic examples of PAC encapsulation in our game’s levels.
 
 ![](https://lh6.googleusercontent.com/oECVjuIw036KPDhN9EsmdvTryNnQOaLaLu6AiYiIrhE58vzFrNTjzYTBRXmk-fGye69Ni9IOe3fb2VM2CTlKCYlD71xfR0LEmNbgljWlPhYCgLj7uiPsWqppc-vlIs-v2loPSkTGOUB3VbGZZYuj_Q01oODXlzj78Q2idnW8LZrjUoLMvL6FKkdDLg)
 
