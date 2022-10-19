@@ -81,14 +81,11 @@ public class CardView
         Vector2 startPosition = controller.transform.position;
         Vector2 targetPosition = new Vector2(startPosition.x, startPosition.y + 1); //up one
 
-        float velocity = 0.01f;
-        float maxVelocity = 0.4f;
-
         //play select card sound
         audioSource.pitch = 1f;
         audioSource.PlayOneShot(controller.cardData.selectSound, 0.7F);
 
-        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 50.0f;
+        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 20.0f;
         //lerp between start and final position
         while (Vector2.Distance(controller.transform.position, targetPosition) > step.magnitude)
         {
@@ -109,14 +106,11 @@ public class CardView
         Vector2 startPosition = controller.transform.position;
         Vector2 targetPosition = new Vector2(startPosition.x, startPosition.y - 1); //down one
 
-        float velocity = 0.01f;
-        float maxVelocity = 0.4f;
-
         //play deselect card sound
         audioSource.pitch = 1.5f;
         audioSource.PlayOneShot(controller.cardData.deselectSound, 0.7F);
 
-        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 50.0f;
+        Vector3 step = (targetPosition - (Vector2)controller.transform.position) / 20.0f;
         //lerp between start and final position
         while (Vector2.Distance(controller.transform.position, targetPosition) > step.magnitude)
         {
