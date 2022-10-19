@@ -7,6 +7,13 @@ HCI909: Advanced Programming of Interactive Systems
 
 This README will discuss how to play Tiny Pocket Dungeon and explanations of how to play the game, design decisions, and code architecture.
 
+LINKS
+=============
+
+Play online or on mobile device : https://daishikofy.itch.io/tinypocketdungeon?secret=DGHE2FfOoVBzmV8P0fn3Z0A7Y
+
+Project repository : https://github.com/Daishikofy/HCI909-TinyPocketDungeon
+
 INITIAL SETUP
 =============
 
@@ -40,15 +47,15 @@ GAMEPLAY
 
 -   There are two main types of cards: a movement card, and magic cards. 
 
-  -   Movement cards allow the player to move to one of the adjacent board cells.
+    -   Movement cards allow the player to move to one of the adjacent board cells.
 
-  -   There are 3 types of magic cards:
+    -   There are 3 types of magic cards:
 
-    -   Sword magic cards  give the player extra attack power.
+      -   Sword magic cards  give the player extra attack power.
 
-    -   Pegasus Boots magic cards give the player an extra move for the following two turns.
+      -   Pegasus Boots magic cards give the player an extra move for the following two turns.
 
-    -   Hourglass magic cards make the board go slower for the following 4 turns.
+      -   Hourglass magic cards make the board go slower for the following 4 turns.
 
 ![](https://lh5.googleusercontent.com/Rlw_qdbouFqgDPBP-KQgrqgV_DdJKoOnytEljNcRnHzjzjh4agkceQuMm-2Ae9LypS3pMJ7ycrN0vhss8yjOrgr-EeBlLkX0F8nRiRthcsIiBz1mbCKRC8UiaNwieQBwSwTUQtLP1I2aWghcpcmQv2RsW9943EaGtUnUJD9rfB5qPyR-QkO6ZZZ5nA)![](https://lh6.googleusercontent.com/fda1E5-xs1467FNsahjP89lqr4finNCkaXXuBF07ljszO20YyZaOyYoCbl0NjSvuEmc4Vwav1H6wcBQ-zBXsspqv7hDTn81wImvtDc3W69IadsxQMe31Lmg37YenTHTP0nP1vtysAfie0ULEWpkBYilLALChEdgKZ9uEOiMVA8AYgFCaPAm5YJg3Ag)![](https://lh3.googleusercontent.com/d8l-bLGbVBN4hPJR_ABF6AFz8YXikjPXMm1wpkOyb6GzN6lQmVhveAUvGlMArGQ_L5BWEn3ToFN3zi0tG8YXLDaU_xrZ8OuWb38jQq0WtkLDq0QVAfGggIHpvZvX3DkNXbNpDlAgeitYBv6uEbXuSMg31YLwyQ5hUv06vvH6Owm1zSVcMWeMS45unQ)![](https://lh5.googleusercontent.com/B6-BWdORQXduNXz-KHTMIZHQtUHKpDQysRWsuYZ7onGk5m-iazrulf-cKapXgAY2tg_YyYwr2o_v8O70aadztVFknKM89w-qdx0F3K3KOueIkDH0UJ-2e4KW1RDZZkzAgw2JBjEiWK6VWYJ7u9m2CL3-Sa-GEWb8ZcrDR-vWIhOJXKie7oORC1ehzA)
 
