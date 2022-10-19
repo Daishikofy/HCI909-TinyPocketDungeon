@@ -7,6 +7,20 @@ HCI909: Advanced Programming of Interactive Systems
 
 This README will discuss how to play Tiny Pocket Dungeon and explanations of how to play the game, design decisions, and code architecture.
 
+INITIAL SETUP
+========
+
+If you wish to run the code within the Unity editor you will need to download :  
+The Unity hub : https://unity3d.com/get-unity/download  
+Unity version 2021.3.4.f1  
+
+Once this is done you can clone the following repository in the folder of your choice. https://github.com/Daishikofy/HCI909-TinyPocketDungeon
+
+``git clone git@github.com:Daishikofy/HCI909-TinyPocketDungeon.git``
+
+Once cloned, you can access the project from unity hub by going in “Projects” and selecting “Add”.
+
+
 OVERVIEW
 ========
 
